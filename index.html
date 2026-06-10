@@ -103,7 +103,7 @@
     }
 
     .app {
-      width: min(1380px, 100%);
+      width: min(1400px, 100%);
       margin: 0 auto;
       padding: 1rem;
     }
@@ -144,6 +144,13 @@
       background: linear-gradient(135deg, #12372a, #2f6f4e);
       color: white;
       box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .brand-mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .brand-mark svg {
@@ -421,9 +428,29 @@
       box-shadow: 0 0 0 4px rgba(47, 111, 78, .10);
     }
 
-    .radio-card input:focus-visible + span {
-      outline: 3px solid var(--focus);
-      outline-offset: 3px;
+    .checkbox-grid {
+      display: grid;
+      gap: .7rem;
+      grid-template-columns: 1fr;
+    }
+
+    .check-card {
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      min-height: 48px;
+      padding: .75rem .85rem;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--card);
+      font-weight: 700;
+    }
+
+    .check-card input {
+      width: 20px;
+      min-height: 20px;
+      height: 20px;
+      accent-color: var(--brand-2);
     }
 
     .divider {
@@ -431,19 +458,60 @@
       background: var(--line);
     }
 
+    .logo-tools {
+      display: grid;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .logo-preview-box {
+      display: flex;
+      align-items: center;
+      gap: .85rem;
+      min-height: 76px;
+      padding: .85rem;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--card);
+    }
+
+    .logo-preview {
+      width: 58px;
+      height: 58px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      color: white;
+      background: linear-gradient(135deg, #12372a, #2f6f4e);
+      overflow: hidden;
+    }
+
+    .logo-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .logo-preview svg {
+      width: 34px;
+      height: 34px;
+    }
+
     .receipt-card {
       position: relative;
-      display: grid;
-      gap: 1.1rem;
       width: 100%;
-      max-width: 780px;
+      max-width: 790px;
       margin: 0 auto;
-      padding: 1.2rem;
+      padding: 1.25rem;
       border: 1px solid #d7cbbd;
-      border-radius: 24px;
-      background: #fffaf1;
+      border-radius: 26px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, .72), rgba(255, 250, 241, .96)),
+        #fffaf1;
       color: #17211c;
       overflow: hidden;
+      box-shadow: 0 18px 48px rgba(36, 24, 6, .10);
     }
 
     .receipt-card::before {
@@ -452,60 +520,86 @@
       inset: 0;
       pointer-events: none;
       background:
-        radial-gradient(circle at top right, rgba(211, 155, 66, .22), transparent 15rem),
-        linear-gradient(90deg, rgba(18, 55, 42, .08), transparent 55%);
+        radial-gradient(circle at 94% 5%, rgba(211, 155, 66, .21), transparent 13rem),
+        linear-gradient(90deg, rgba(18, 55, 42, .07), transparent 55%);
     }
 
-    .receipt-card > * {
+    .receipt-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: .42rem;
+      height: 100%;
+      background: linear-gradient(180deg, #12372a, #2f6f4e 55%, #d39b42);
+    }
+
+    .receipt-inner {
       position: relative;
       z-index: 1;
+      display: grid;
+      gap: 1.1rem;
     }
 
     .receipt-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 1fr auto;
       gap: 1rem;
-      padding-bottom: .9rem;
+      align-items: start;
+      padding-bottom: 1rem;
       border-bottom: 2px solid #d7cbbd;
     }
 
     .church {
       display: flex;
       align-items: center;
-      gap: .75rem;
+      gap: .85rem;
+      min-width: 0;
     }
 
     .seal {
-      width: 56px;
-      height: 56px;
+      width: 64px;
+      height: 64px;
       flex: 0 0 auto;
       display: grid;
       place-items: center;
-      border-radius: 18px;
+      border-radius: 20px;
       color: white;
       background: linear-gradient(135deg, #12372a, #2f6f4e);
+      overflow: hidden;
+      box-shadow: 0 10px 24px rgba(18, 55, 42, .18);
+    }
+
+    .seal img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .seal svg {
-      width: 34px;
-      height: 34px;
+      width: 38px;
+      height: 38px;
     }
 
     .church strong {
       display: block;
-      font-size: 1.15rem;
+      color: #12372a;
+      font-size: clamp(1.15rem, 4vw, 1.55rem);
+      line-height: 1.08;
+      letter-spacing: -.04em;
     }
 
     .church small,
     .receipt-number,
     .receipt-title p,
-    .detail span:first-child,
-    .receipt-footer {
+    .detail-label,
+    .receipt-footer,
+    .receipt-meta-note {
       color: #607064;
     }
 
     .receipt-number {
+      min-width: 112px;
       text-align: right;
       font-size: .86rem;
     }
@@ -513,92 +607,115 @@
     .receipt-number strong {
       display: block;
       color: #17211c;
-      font-size: 1rem;
+      font-size: 1.05rem;
+      letter-spacing: -.02em;
+    }
+
+    .receipt-title {
+      display: grid;
+      gap: .35rem;
     }
 
     .receipt-title h2 {
       color: #12372a;
-      font-size: clamp(1.8rem, 7vw, 3rem);
+      font-size: clamp(1.85rem, 7vw, 3.2rem);
+      letter-spacing: -.06em;
     }
 
     .amount-box {
-      padding: 1rem;
+      display: grid;
+      gap: .4rem;
+      padding: 1.05rem;
       border: 1px solid #d7cbbd;
-      border-radius: 20px;
-      background: linear-gradient(135deg, rgba(211, 155, 66, .2), rgba(47, 111, 78, .13));
+      border-radius: 22px;
+      background:
+        linear-gradient(135deg, rgba(211, 155, 66, .22), rgba(47, 111, 78, .12)),
+        #fffaf1;
     }
 
     .amount-box span {
       display: block;
       color: #607064;
-      font-size: .82rem;
+      font-size: .78rem;
       font-weight: 900;
-      letter-spacing: .05em;
+      letter-spacing: .08em;
       text-transform: uppercase;
     }
 
     .amount-box strong {
       display: block;
-      margin-top: .2rem;
       color: #12372a;
-      font-size: clamp(2rem, 10vw, 4rem);
+      font-size: clamp(2.2rem, 10vw, 4.15rem);
       line-height: 1;
-      letter-spacing: -.06em;
+      letter-spacing: -.07em;
     }
 
     .receipt-details {
       display: grid;
-      gap: .7rem;
+      gap: .65rem;
     }
 
-    .detail {
+    .details-grid {
       display: grid;
-      gap: .2rem;
-      padding: .68rem 0;
-      border-bottom: 1px dashed #d7cbbd;
+      gap: .7rem;
+      grid-template-columns: 1fr;
     }
 
-    .detail span:first-child {
-      font-size: .78rem;
+    .detail-item {
+      display: grid;
+      gap: .25rem;
+      padding: .78rem .85rem;
+      border: 1px solid rgba(215, 203, 189, .82);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .48);
+      break-inside: avoid;
+    }
+
+    .detail-label {
+      font-size: .72rem;
       font-weight: 900;
-      letter-spacing: .05em;
+      letter-spacing: .08em;
       text-transform: uppercase;
     }
 
-    .detail span:last-child {
+    .detail-value {
+      color: #17211c;
       font-weight: 800;
       overflow-wrap: anywhere;
     }
 
     .thanks {
-      padding: 1rem;
-      border-radius: 18px;
-      background: #12372a;
+      padding: 1.05rem;
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at top right, rgba(211, 155, 66, .26), transparent 10rem),
+        #12372a;
       color: #fffaf1;
+      break-inside: avoid;
     }
 
     .thanks strong {
       display: block;
       margin-bottom: .35rem;
       font-family: var(--serif);
-      font-size: 1.15rem;
+      font-size: 1.18rem;
     }
 
     .thanks p {
-      color: rgba(255, 250, 241, .92);
+      color: rgba(255, 250, 241, .93);
     }
 
     .receipt-footer {
       display: grid;
-      gap: .5rem;
-      padding-top: .9rem;
+      gap: .55rem;
+      padding-top: .95rem;
       border-top: 1px solid #d7cbbd;
       font-size: .84rem;
     }
 
     .signature {
       width: min(280px, 100%);
-      margin-top: .9rem;
+      margin-top: .95rem;
       padding-top: .55rem;
       border-top: 1px solid #9d907e;
       color: #17211c;
@@ -790,9 +907,12 @@
         grid-template-columns: repeat(3, 1fr);
       }
 
-      .detail {
-        grid-template-columns: 150px 1fr;
-        align-items: center;
+      .checkbox-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .details-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
@@ -818,8 +938,8 @@
         grid-template-columns: repeat(3, 1fr);
       }
 
-      .receipt-details.two {
-        grid-template-columns: repeat(2, 1fr);
+      .logo-tools {
+        grid-template-columns: 1fr 1fr;
       }
 
       .stats {
@@ -834,7 +954,7 @@
 
     @media (min-width: 1024px) {
       .main-grid {
-        grid-template-columns: minmax(0, 1fr) minmax(430px, .75fr);
+        grid-template-columns: minmax(0, 1fr) minmax(440px, .78fr);
         align-items: start;
       }
 
@@ -847,7 +967,7 @@
     @media print {
       @page {
         size: Letter;
-        margin: 0.45in;
+        margin: 0.42in;
       }
 
       html,
@@ -858,6 +978,8 @@
         padding: 0 !important;
         background: white !important;
         color: #17211c !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
 
       body * {
@@ -902,39 +1024,109 @@
 
       .receipt-card {
         width: 100% !important;
-        max-width: 7.4in !important;
-        min-height: 9.35in !important;
+        max-width: 7.55in !important;
+        min-height: 9.45in !important;
         margin: 0 auto !important;
-        padding: 0.34in !important;
+        padding: 0.38in 0.42in 0.34in 0.48in !important;
         border: 1px solid #d7cbbd !important;
-        border-radius: 0 !important;
+        border-radius: 0.08in !important;
         box-shadow: none !important;
-        background: #fffaf1 !important;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, .78), rgba(255, 250, 241, .98)),
+          #fffaf1 !important;
         color: #17211c !important;
-        overflow: visible !important;
+        overflow: hidden !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
       }
 
-      .receipt-details.two {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important;
-        gap: 0.3in !important;
+      .receipt-card::before {
+        background:
+          radial-gradient(circle at 94% 5%, rgba(211, 155, 66, .18), transparent 2.25in),
+          linear-gradient(90deg, rgba(18, 55, 42, .045), transparent 55%) !important;
       }
 
-      .detail {
-        display: grid !important;
-        grid-template-columns: 1.2in 1fr !important;
-        gap: .12in !important;
-        padding: .09in 0 !important;
+      .receipt-card::after {
+        width: .09in !important;
       }
 
-      .amount-box strong {
-        font-size: 34pt !important;
+      .receipt-inner {
+        gap: .17in !important;
+      }
+
+      .receipt-top {
+        display: grid !important;
+        grid-template-columns: 1fr auto !important;
+        gap: .24in !important;
+        padding-bottom: .17in !important;
+      }
+
+      .seal {
+        width: .72in !important;
+        height: .72in !important;
+        border-radius: .15in !important;
+      }
+
+      .seal svg {
+        width: .42in !important;
+        height: .42in !important;
+      }
+
+      .church strong {
+        font-size: 17pt !important;
       }
 
       .receipt-title h2 {
-        font-size: 25pt !important;
+        font-size: 27pt !important;
+      }
+
+      .amount-box {
+        padding: .18in !important;
+        border-radius: .16in !important;
+      }
+
+      .amount-box strong {
+        font-size: 35pt !important;
+      }
+
+      .details-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: .11in !important;
+      }
+
+      .detail-item {
+        padding: .105in .12in !important;
+        border-radius: .12in !important;
+      }
+
+      .detail-label {
+        font-size: 7.8pt !important;
+      }
+
+      .detail-value {
+        font-size: 10.3pt !important;
+      }
+
+      .thanks {
+        padding: .17in !important;
+        border-radius: .14in !important;
+      }
+
+      .thanks strong {
+        font-size: 12.5pt !important;
+      }
+
+      .thanks p {
+        font-size: 9.5pt !important;
+      }
+
+      .receipt-footer {
+        font-size: 8.7pt !important;
+      }
+
+      .signature {
+        margin-top: .16in !important;
       }
 
       .no-print {
@@ -950,12 +1142,7 @@
   <div class="app">
     <header class="topbar no-print">
       <div class="brand" aria-label="Iglesia Jesús te ama">
-        <div class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 64 64" fill="none">
-            <path d="M32 54s22-12.6 22-31.1C54 13.9 47.6 8 40.3 8c-4.3 0-7.1 2.1-8.3 4-1.2-1.9-4-4-8.3-4C16.4 8 10 13.9 10 22.9 10 41.4 32 54 32 54Z" stroke="currentColor" stroke-width="5" stroke-linejoin="round"></path>
-            <path d="M32 18v22M22 28h20" stroke="currentColor" stroke-width="5" stroke-linecap="round"></path>
-          </svg>
-        </div>
+        <div class="brand-mark" id="appLogoMark" aria-hidden="true"></div>
         <div>
           <strong>Recibos de contribuciones</strong>
           <span>Iglesia Jesús te ama · Juan 13:34</span>
@@ -971,10 +1158,10 @@
     <main id="mainContent">
       <section class="hero no-print" aria-labelledby="heroTitle">
         <span class="eyebrow">Aplicación local y privada</span>
-        <h1 id="heroTitle">Recibos claros, listos para PDF.</h1>
+        <h1 id="heroTitle">Recibos profesionales, listos para PDF.</h1>
         <p>
-          Crea recibos de contribuciones, guarda los datos de cada contribuyente,
-          reutilízalos en recibos futuros y prepara un correo de agradecimiento cuando exista correo registrado.
+          Configura el logo, elige qué datos incluir, omite automáticamente campos vacíos,
+          guarda contribuyentes y genera recibos limpios para impresión o PDF.
         </p>
         <div class="toolbar">
           <button class="btn btn-primary" id="goFormBtn" type="button">Crear recibo</button>
@@ -986,11 +1173,55 @@
         <section class="panel no-print" aria-labelledby="formTitle">
           <div class="panel-header">
             <h2 id="formTitle">Nuevo recibo</h2>
-            <p>El correo es opcional. Los datos del contribuyente se guardan para próximos recibos.</p>
+            <p>El correo es opcional. Los campos vacíos no aparecerán en el PDF final.</p>
           </div>
 
           <div class="panel-body">
             <form id="receiptForm" novalidate>
+              <fieldset>
+                <legend>Logo y apariencia del PDF</legend>
+
+                <div class="logo-tools">
+                  <div class="field">
+                    <label for="logoInput">Logo de la iglesia</label>
+                    <input id="logoInput" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+                    <span class="hint">Se guarda en este navegador y aparecerá también en el PDF.</span>
+                  </div>
+
+                  <div class="logo-preview-box">
+                    <div class="logo-preview" id="logoPreview" aria-hidden="true"></div>
+                    <div>
+                      <strong>Logo actual</strong>
+                      <p class="hint">Usa una imagen cuadrada o con fondo transparente para mejor acabado.</p>
+                      <div class="toolbar" style="margin-top:.55rem;">
+                        <button class="btn btn-small" id="removeLogoBtn" type="button">Quitar logo</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <div class="divider"></div>
+
+              <fieldset>
+                <legend>Datos que aparecerán en el PDF</legend>
+                <div class="checkbox-grid" id="pdfOptions">
+                  <label class="check-card"><input type="checkbox" data-pdf-option="email" checked> Correo</label>
+                  <label class="check-card"><input type="checkbox" data-pdf-option="phone" checked> Teléfono</label>
+                  <label class="check-card"><input type="checkbox" data-pdf-option="address" checked> Dirección del contribuyente</label>
+                  <label class="check-card"><input type="checkbox" data-pdf-option="method" checked> Método de contribución</label>
+                  <label class="check-card"><input type="checkbox" data-pdf-option="category" checked> Concepto</label>
+                  <label class="check-card"><input type="checkbox" data-pdf-option="reference" checked> Referencia</label>
+                  <label class="check-card"><input type="checkbox" data-pdf-option="notes" checked> Notas</label>
+                  <label class="check-card"><input type="checkbox" data-pdf-option="issuer" checked> Emitido por</label>
+                  <label class="check-card"><input type="checkbox" data-pdf-option="churchDetails" checked> Datos de la iglesia</label>
+                  <label class="check-card"><input type="checkbox" data-pdf-option="thankYou" checked> Agradecimiento bíblico</label>
+                  <label class="check-card"><input type="checkbox" data-pdf-option="fiscalNote" checked> Nota fiscal</label>
+                </div>
+              </fieldset>
+
+              <div class="divider"></div>
+
               <fieldset>
                 <legend>Datos del contribuyente</legend>
 
@@ -1007,7 +1238,7 @@
                   <div class="field">
                     <label>&nbsp;</label>
                     <button class="btn" id="clearContributorBtn" type="button">Nuevo contribuyente</button>
-                    <span class="hint">Limpia solo los datos personales para registrar otra persona.</span>
+                    <span class="hint">Limpia solo los datos personales.</span>
                   </div>
                 </div>
 
@@ -1078,35 +1309,12 @@
                 <div style="margin-top:1rem;">
                   <p class="group-label" id="paymentLabel">Medio de contribución *</p>
                   <div class="radio-cards" role="radiogroup" aria-labelledby="paymentLabel">
-                    <label class="radio-card">
-                      <input type="radio" name="paymentMethod" value="Efectivo" checked>
-                      <span>Efectivo</span>
-                    </label>
-
-                    <label class="radio-card">
-                      <input type="radio" name="paymentMethod" value="Transferencia bancaria">
-                      <span>Transferencia bancaria</span>
-                    </label>
-
-                    <label class="radio-card">
-                      <input type="radio" name="paymentMethod" value="Cheque">
-                      <span>Cheque</span>
-                    </label>
-
-                    <label class="radio-card">
-                      <input type="radio" name="paymentMethod" value="Tarjeta">
-                      <span>Tarjeta</span>
-                    </label>
-
-                    <label class="radio-card">
-                      <input type="radio" name="paymentMethod" value="Bizum / pago móvil">
-                      <span>Bizum / pago móvil</span>
-                    </label>
-
-                    <label class="radio-card">
-                      <input type="radio" name="paymentMethod" value="Otro medio">
-                      <span>Otro medio</span>
-                    </label>
+                    <label class="radio-card"><input type="radio" name="paymentMethod" value="Efectivo" checked><span>Efectivo</span></label>
+                    <label class="radio-card"><input type="radio" name="paymentMethod" value="Transferencia bancaria"><span>Transferencia bancaria</span></label>
+                    <label class="radio-card"><input type="radio" name="paymentMethod" value="Cheque"><span>Cheque</span></label>
+                    <label class="radio-card"><input type="radio" name="paymentMethod" value="Tarjeta"><span>Tarjeta</span></label>
+                    <label class="radio-card"><input type="radio" name="paymentMethod" value="Bizum / pago móvil"><span>Bizum / pago móvil</span></label>
+                    <label class="radio-card"><input type="radio" name="paymentMethod" value="Otro medio"><span>Otro medio</span></label>
                   </div>
                 </div>
 
@@ -1135,7 +1343,7 @@
                 <div class="field" data-field="notes" style="margin-top:1rem;">
                   <label for="notes">Notas</label>
                   <textarea id="notes" name="notes" placeholder="Ej. Ofrenda especial de domingo."></textarea>
-                  <span class="hint">Las notas aparecen en el recibo si las completas.</span>
+                  <span class="hint">Si está vacío, no aparecerá en el PDF.</span>
                   <span class="error" id="notesError"></span>
                 </div>
               </fieldset>
@@ -1179,104 +1387,53 @@
         <aside class="preview" aria-labelledby="previewTitle">
           <section class="panel" id="printArea">
             <div class="panel-header no-print">
-              <h2 id="previewTitle">Vista previa</h2>
-              <p>Este recibo se imprimirá o guardará como PDF.</p>
+              <h2 id="previewTitle">Vista previa profesional</h2>
+              <p>Solo se mostrarán los datos activados y completados.</p>
             </div>
 
             <div class="panel-body">
               <article class="receipt-card" aria-label="Recibo de contribución">
-                <header class="receipt-top">
-                  <div class="church">
-                    <div class="seal" aria-hidden="true">
-                      <svg viewBox="0 0 64 64" fill="none">
-                        <path d="M32 54s22-12.6 22-31.1C54 13.9 47.6 8 40.3 8c-4.3 0-7.1 2.1-8.3 4-1.2-1.9-4-4-8.3-4C16.4 8 10 13.9 10 22.9 10 41.4 32 54 32 54Z" stroke="currentColor" stroke-width="5" stroke-linejoin="round"></path>
-                        <path d="M32 18v22M22 28h20" stroke="currentColor" stroke-width="5" stroke-linecap="round"></path>
-                      </svg>
+                <div class="receipt-inner">
+                  <header class="receipt-top">
+                    <div class="church">
+                      <div class="seal" id="receiptLogo" aria-hidden="true"></div>
+                      <div>
+                        <strong id="rChurchName">Iglesia Jesús te ama</strong>
+                        <small>Juan 13:34</small>
+                      </div>
                     </div>
-                    <div>
-                      <strong id="rChurchName">Iglesia Jesús te ama</strong>
-                      <small>Juan 13:34</small>
-                    </div>
-                  </div>
 
-                  <div class="receipt-number">
-                    <span>Recibo</span>
-                    <strong id="rNumber">R-000001</strong>
-                  </div>
-                </header>
+                    <div class="receipt-number">
+                      <span>Recibo</span>
+                      <strong id="rNumber">R-000001</strong>
+                    </div>
+                  </header>
 
-                <section class="receipt-title">
-                  <h2>Recibo de contribución</h2>
-                  <p>Documento de constancia para el contribuyente.</p>
-                </section>
+                  <section class="receipt-title">
+                    <h2>Recibo de contribución</h2>
+                    <p>Documento de constancia para el contribuyente.</p>
+                  </section>
 
-                <section class="amount-box">
-                  <span>Importe recibido</span>
-                  <strong id="rAmount">€0,00</strong>
-                </section>
+                  <section class="amount-box">
+                    <span>Importe recibido</span>
+                    <strong id="rAmount">€0,00</strong>
+                  </section>
 
-                <section class="receipt-details two">
-                  <div>
-                    <div class="detail">
-                      <span>Contribuyente</span>
-                      <span id="rDonorName">Nombre del contribuyente</span>
-                    </div>
-                    <div class="detail">
-                      <span>Correo</span>
-                      <span id="rDonorEmail">—</span>
-                    </div>
-                    <div class="detail">
-                      <span>Fecha</span>
-                      <span id="rDate">—</span>
-                    </div>
-                    <div class="detail">
-                      <span>Método</span>
-                      <span id="rPayment">Efectivo</span>
-                    </div>
-                  </div>
+                  <section class="receipt-details" aria-label="Detalles del recibo">
+                    <div class="details-grid" id="receiptDetails"></div>
+                  </section>
 
-                  <div>
-                    <div class="detail">
-                      <span>Concepto</span>
-                      <span id="rCategory">Contribución general</span>
-                    </div>
-                    <div class="detail">
-                      <span>Referencia</span>
-                      <span id="rReference">—</span>
-                    </div>
-                    <div class="detail">
-                      <span>Teléfono</span>
-                      <span id="rPhone">—</span>
-                    </div>
-                    <div class="detail">
-                      <span>Emitido por</span>
-                      <span id="rIssuer">—</span>
-                    </div>
-                  </div>
-                </section>
+                  <section class="thanks" id="thanksBlock">
+                    <strong>Gracias de parte de la iglesia Jesús te ama.</strong>
+                    <p>
+                      “Un mandamiento nuevo os doy: Que os améis unos a otros;
+                      como yo os he amado, que también os améis unos a otros.”
+                      Juan 13:34.
+                    </p>
+                  </section>
 
-                <section class="detail">
-                  <span>Notas</span>
-                  <span id="rNotes">—</span>
-                </section>
-
-                <section class="thanks">
-                  <strong>Gracias de parte de la iglesia Jesús te ama.</strong>
-                  <p>
-                    “Un mandamiento nuevo os doy: Que os améis unos a otros;
-                    como yo os he amado, que también os améis unos a otros.”
-                    Juan 13:34.
-                  </p>
-                </section>
-
-                <footer class="receipt-footer">
-                  <p id="rChurchAddress">Este recibo fue generado para constancia de la contribución recibida.</p>
-                  <div class="signature" id="rSignature">Firma autorizada</div>
-                  <p>
-                    Nota: verifica los requisitos fiscales aplicables en tu país o región antes de usar este documento
-                    como comprobante tributario oficial.
-                  </p>
-                </footer>
+                  <footer class="receipt-footer" id="receiptFooter"></footer>
+                </div>
               </article>
             </div>
           </section>
@@ -1397,22 +1554,22 @@
       <header class="modal-header">
         <div>
           <h2 id="helpTitle">Ayuda</h2>
-          <p style="color:var(--muted); margin-top:.35rem;">Cómo crear, guardar, imprimir y enviar recibos.</p>
+          <p style="color:var(--muted); margin-top:.35rem;">Cómo crear, personalizar, guardar, imprimir y enviar recibos.</p>
         </div>
         <button class="icon-btn" id="closeHelpBtn" type="button" aria-label="Cerrar ayuda">×</button>
       </header>
 
       <div class="modal-body">
-        <h3>Correo opcional</h3>
+        <h3>Logo en el PDF</h3>
         <p style="color:var(--muted); margin-top:.35rem;">
-          Puedes guardar recibos aunque el contribuyente no tenga correo. Para enviar por correo, sí debe existir un correo registrado.
+          Carga el logo desde “Logo de la iglesia”. La imagen se guarda localmente y aparece en la vista previa y en el PDF.
         </p>
 
         <br>
 
-        <h3>Contribuyentes guardados</h3>
+        <h3>Datos incluidos</h3>
         <p style="color:var(--muted); margin-top:.35rem;">
-          Cuando guardas un recibo, los datos personales del contribuyente se guardan automáticamente para reutilizarlos después.
+          Marca o desmarca los datos que quieras incluir. Aunque estén marcados, si un campo está vacío no aparecerá en el PDF.
         </p>
 
         <br>
@@ -1426,7 +1583,7 @@
 
         <h3>Privacidad</h3>
         <p style="color:var(--muted); margin-top:.35rem;">
-          Esta aplicación no usa servidores. Los recibos y contribuyentes se guardan localmente en el navegador.
+          Esta aplicación no usa servidores. Recibos, contribuyentes, logo y preferencias se guardan localmente en el navegador.
         </p>
       </div>
 
@@ -1442,15 +1599,31 @@
     (function () {
       "use strict";
 
-      var RECEIPTS_KEY = "recibos_jesus_te_ama_v4";
-      var CONTRIBUTORS_KEY = "contribuyentes_jesus_te_ama_v1";
-      var NUMBER_KEY = "recibos_jesus_te_ama_next_number_v4";
-      var THEME_KEY = "recibos_jesus_te_ama_theme_v4";
+      var RECEIPTS_KEY = "recibos_jesus_te_ama_v5";
+      var CONTRIBUTORS_KEY = "contribuyentes_jesus_te_ama_v2";
+      var NUMBER_KEY = "recibos_jesus_te_ama_next_number_v5";
+      var THEME_KEY = "recibos_jesus_te_ama_theme_v5";
+      var LOGO_KEY = "recibos_jesus_te_ama_logo_v1";
+      var PDF_OPTIONS_KEY = "recibos_jesus_te_ama_pdf_options_v1";
 
       var receipts = [];
       var contributors = [];
       var activeReceipt = null;
       var lastFocusedElement = null;
+      var churchLogo = "";
+      var pdfOptions = {
+        email: true,
+        phone: true,
+        address: true,
+        method: true,
+        category: true,
+        reference: true,
+        notes: true,
+        issuer: true,
+        churchDetails: true,
+        thankYou: true,
+        fiscalNote: true
+      };
 
       function $(selector, root) {
         return (root || document).querySelector(selector);
@@ -1492,7 +1665,7 @@
       }
 
       function formatDate(iso) {
-        if (!iso) return "—";
+        if (!iso) return "";
 
         var parts = iso.split("-");
         var date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
@@ -1525,6 +1698,29 @@
           .replace(/>/g, "&gt;")
           .replace(/"/g, "&quot;")
           .replace(/'/g, "&#039;");
+      }
+
+      function defaultLogoSvg() {
+        return [
+          "<svg viewBox='0 0 64 64' fill='none' aria-hidden='true'>",
+          "<path d='M32 54s22-12.6 22-31.1C54 13.9 47.6 8 40.3 8c-4.3 0-7.1 2.1-8.3 4-1.2-1.9-4-4-8.3-4C16.4 8 10 13.9 10 22.9 10 41.4 32 54 32 54Z' stroke='currentColor' stroke-width='5' stroke-linejoin='round'></path>",
+          "<path d='M32 18v22M22 28h20' stroke='currentColor' stroke-width='5' stroke-linecap='round'></path>",
+          "</svg>"
+        ].join("");
+      }
+
+      function logoHtml() {
+        if (churchLogo) {
+          return "<img src='" + escapeHtml(churchLogo) + "' alt='Logo de la iglesia'>";
+        }
+
+        return defaultLogoSvg();
+      }
+
+      function renderLogo() {
+        $("#logoPreview").innerHTML = logoHtml();
+        $("#receiptLogo").innerHTML = logoHtml();
+        $("#appLogoMark").innerHTML = logoHtml();
       }
 
       function getFormData() {
@@ -1612,24 +1808,74 @@
         };
       }
 
+      function addDetail(items, label, value, optionKey) {
+        var cleanValue = safeText(value);
+
+        if (!cleanValue) {
+          return;
+        }
+
+        if (optionKey && !pdfOptions[optionKey]) {
+          return;
+        }
+
+        items.push({
+          label: label,
+          value: cleanValue
+        });
+      }
+
+      function renderDetailItems(items) {
+        return items.map(function (item) {
+          return [
+            "<div class='detail-item'>",
+            "<span class='detail-label'>", escapeHtml(item.label), "</span>",
+            "<span class='detail-value'>", escapeHtml(item.value), "</span>",
+            "</div>"
+          ].join("");
+        }).join("");
+      }
+
       function setPreview(receipt) {
         var r = receipt || getFormData();
         var number = r.receiptNumber || (activeReceipt && activeReceipt.receiptNumber) || "R-000001";
+        var detailItems = [];
 
         $("#rChurchName").textContent = r.churchName || "Iglesia Jesús te ama";
         $("#rNumber").textContent = number;
         $("#rAmount").textContent = formatMoney(r.amount, r.currency);
-        $("#rDonorName").textContent = r.donorName || "Nombre del contribuyente";
-        $("#rDonorEmail").textContent = r.donorEmail || "—";
-        $("#rDate").textContent = formatDate(r.date);
-        $("#rPayment").textContent = r.paymentMethod || "Efectivo";
-        $("#rCategory").textContent = r.category || "Contribución general";
-        $("#rReference").textContent = r.reference || "—";
-        $("#rPhone").textContent = r.donorPhone || "—";
-        $("#rIssuer").textContent = r.issuer || "—";
-        $("#rNotes").textContent = r.notes || "—";
-        $("#rChurchAddress").textContent = r.churchAddress || "Este recibo fue generado para constancia de la contribución recibida.";
-        $("#rSignature").textContent = r.issuer ? r.issuer + " · Firma autorizada" : "Firma autorizada";
+
+        addDetail(detailItems, "Contribuyente", r.donorName || "Nombre del contribuyente");
+        addDetail(detailItems, "Correo", r.donorEmail, "email");
+        addDetail(detailItems, "Teléfono", r.donorPhone, "phone");
+        addDetail(detailItems, "Dirección", r.donorAddress, "address");
+        addDetail(detailItems, "Fecha", formatDate(r.date));
+        addDetail(detailItems, "Método", r.paymentMethod, "method");
+        addDetail(detailItems, "Concepto", r.category, "category");
+        addDetail(detailItems, "Referencia", r.reference, "reference");
+        addDetail(detailItems, "Emitido por", r.issuer, "issuer");
+        addDetail(detailItems, "Notas", r.notes, "notes");
+
+        $("#receiptDetails").innerHTML = renderDetailItems(detailItems);
+        $("#thanksBlock").hidden = !pdfOptions.thankYou;
+
+        var footer = [];
+
+        if (pdfOptions.churchDetails && safeText(r.churchAddress)) {
+          footer.push("<p>" + escapeHtml(r.churchAddress) + "</p>");
+        }
+
+        if (pdfOptions.issuer && safeText(r.issuer)) {
+          footer.push("<div class='signature'>" + escapeHtml(r.issuer) + " · Firma autorizada</div>");
+        } else {
+          footer.push("<div class='signature'>Firma autorizada</div>");
+        }
+
+        if (pdfOptions.fiscalNote) {
+          footer.push("<p class='receipt-meta-note'>Nota: verifica los requisitos fiscales aplicables en tu país o región antes de usar este documento como comprobante tributario oficial.</p>");
+        }
+
+        $("#receiptFooter").innerHTML = footer.join("");
       }
 
       function loadStorage() {
@@ -1644,6 +1890,17 @@
         } catch (error) {
           contributors = [];
         }
+
+        try {
+          churchLogo = localStorage.getItem(LOGO_KEY) || "";
+        } catch (error) {
+          churchLogo = "";
+        }
+
+        try {
+          var savedOptions = JSON.parse(localStorage.getItem(PDF_OPTIONS_KEY) || "{}");
+          pdfOptions = Object.assign({}, pdfOptions, savedOptions);
+        } catch (error) {}
       }
 
       function saveReceipts() {
@@ -1662,11 +1919,16 @@
         }
       }
 
+      function savePdfOptions() {
+        try {
+          localStorage.setItem(PDF_OPTIONS_KEY, JSON.stringify(pdfOptions));
+        } catch (error) {}
+      }
+
       function upsertContributor(data) {
         var nameKey = normalize(data.donorName);
         var emailKey = normalize(data.donorEmail);
         var selectedId = data.contributorId;
-
         var existing = null;
 
         if (selectedId) {
@@ -1826,8 +2088,8 @@
           "Recibo: " + number,
           "Fecha: " + formatDate(r.date),
           "Importe: " + formatMoney(r.amount, r.currency),
-          "Método: " + r.paymentMethod,
-          "Concepto: " + r.category,
+          r.paymentMethod ? "Método: " + r.paymentMethod : "",
+          r.category ? "Concepto: " + r.category : "",
           r.reference ? "Referencia: " + r.reference : "",
           "",
           "“Un mandamiento nuevo os doy: Que os améis unos a otros; como yo os he amado, que también os améis unos a otros.” Juan 13:34.",
@@ -1880,6 +2142,7 @@
           error.textContent = "";
         });
 
+        applyPdfOptionsToInputs();
         setPreview(getFormData());
         renderContributorSelect();
         showToast("Formulario limpio", "Puedes crear un nuevo recibo.");
@@ -2276,6 +2539,65 @@
         }
       }
 
+      function applyPdfOptionsToInputs() {
+        $all("[data-pdf-option]").forEach(function (input) {
+          var key = input.getAttribute("data-pdf-option");
+          input.checked = Boolean(pdfOptions[key]);
+        });
+      }
+
+      function updatePdfOptionsFromInputs() {
+        $all("[data-pdf-option]").forEach(function (input) {
+          var key = input.getAttribute("data-pdf-option");
+          pdfOptions[key] = input.checked;
+        });
+
+        savePdfOptions();
+        setPreview(activeReceipt || getFormData());
+      }
+
+      function handleLogoInput(event) {
+        var file = event.target.files && event.target.files[0];
+
+        if (!file) {
+          return;
+        }
+
+        if (!file.type || file.type.indexOf("image/") !== 0) {
+          showToast("Archivo no válido", "Selecciona una imagen para el logo.");
+          return;
+        }
+
+        if (file.size > 1024 * 1024 * 2.5) {
+          showToast("Logo demasiado grande", "Usa una imagen menor de 2.5 MB.");
+          event.target.value = "";
+          return;
+        }
+
+        var reader = new FileReader();
+
+        reader.onload = function () {
+          churchLogo = String(reader.result || "");
+          localStorage.setItem(LOGO_KEY, churchLogo);
+          renderLogo();
+          showToast("Logo actualizado", "El logo aparecerá en el recibo y en el PDF.");
+        };
+
+        reader.onerror = function () {
+          showToast("Error", "No se pudo cargar el logo.");
+        };
+
+        reader.readAsDataURL(file);
+      }
+
+      function removeLogo() {
+        churchLogo = "";
+        localStorage.removeItem(LOGO_KEY);
+        $("#logoInput").value = "";
+        renderLogo();
+        showToast("Logo quitado", "Se usará el símbolo predeterminado.");
+      }
+
       function bindEvents() {
         $("#receiptForm").addEventListener("submit", saveReceipt);
 
@@ -2288,6 +2610,11 @@
           activeReceipt = null;
           setPreview(getFormData());
         });
+
+        $("#logoInput").addEventListener("change", handleLogoInput);
+        $("#removeLogoBtn").addEventListener("click", removeLogo);
+
+        $("#pdfOptions").addEventListener("change", updatePdfOptionsFromInputs);
 
         $("#savedContributor").addEventListener("change", function () {
           var id = $("#savedContributor").value;
@@ -2408,12 +2735,14 @@
         $("#date").value = todayISO();
         $("#churchName").value = "Iglesia Jesús te ama";
 
+        applyPdfOptionsToInputs();
+        renderLogo();
         renderContributorSelect();
         renderContributors();
         renderReceipts();
         setPreview(getFormData());
 
-        showToast("Aplicación lista", "Ya puedes crear recibos y reutilizar contribuyentes.");
+        showToast("Aplicación lista", "Ya puedes crear recibos profesionales con logo y PDF personalizado.");
       }
 
       document.addEventListener("DOMContentLoaded", init);
