@@ -1,4 +1,5 @@
-<!doctype html>
+
+   <!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
@@ -11,20 +12,17 @@
     :root {
       --bg: #f7f4ee;
       --card: #ffffff;
-      --card-soft: #fffaf1;
+      --soft: #fffaf1;
       --text: #17211c;
       --muted: #607064;
-      --line: #d9ccbb;
+      --line: #d8cbbb;
       --brand: #12372a;
       --brand-2: #2f6f4e;
       --accent: #d39b42;
       --danger: #a73535;
-      --success: #217a4b;
       --focus: #0b70ff;
-      --shadow: 0 18px 50px rgba(25, 32, 27, .14);
+      --shadow: 0 14px 38px rgba(25, 32, 27, .14);
       --radius: 22px;
-      --radius-sm: 12px;
-      --tap: 46px;
       --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       --serif: Georgia, "Times New Roman", serif;
     }
@@ -32,7 +30,7 @@
     [data-theme="dark"] {
       --bg: #0d1410;
       --card: #17251e;
-      --card-soft: #121d17;
+      --soft: #121d17;
       --text: #f3efe7;
       --muted: #bac8bd;
       --line: #33483e;
@@ -40,9 +38,8 @@
       --brand-2: #72ca95;
       --accent: #f0bd61;
       --danger: #ff8f8f;
-      --success: #7ae0a6;
       --focus: #79b7ff;
-      --shadow: 0 18px 50px rgba(0,0,0,.35);
+      --shadow: 0 14px 38px rgba(0, 0, 0, .34);
     }
 
     * {
@@ -57,12 +54,12 @@
       margin: 0;
       min-width: 320px;
       font-family: var(--font);
+      line-height: 1.5;
       color: var(--text);
       background:
-        radial-gradient(circle at top left, rgba(211,155,66,.18), transparent 30rem),
-        radial-gradient(circle at 90% 10%, rgba(47,111,78,.16), transparent 30rem),
+        radial-gradient(circle at top left, rgba(211, 155, 66, .18), transparent 28rem),
+        radial-gradient(circle at 90% 10%, rgba(47, 111, 78, .14), transparent 28rem),
         var(--bg);
-      line-height: 1.5;
     }
 
     body.modal-open {
@@ -81,8 +78,8 @@
     }
 
     button:disabled {
-      opacity: .55;
       cursor: not-allowed;
+      opacity: .55;
     }
 
     :focus-visible {
@@ -92,14 +89,14 @@
 
     .skip-link {
       position: fixed;
-      left: 1rem;
       top: 1rem;
-      z-index: 9999;
-      padding: .8rem 1rem;
+      left: 1rem;
+      z-index: 999;
+      padding: .75rem 1rem;
+      border-radius: 999px;
       background: var(--brand);
       color: white;
-      border-radius: 999px;
-      transform: translateY(-150%);
+      transform: translateY(-160%);
       transition: transform .2s ease;
     }
 
@@ -116,16 +113,20 @@
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 50;
+      z-index: 30;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      padding: .8rem 1rem;
+      padding: .85rem 1rem;
       margin: -1rem -1rem 1rem;
-      background: color-mix(in srgb, var(--bg) 90%, transparent);
+      background: rgba(247, 244, 238, .92);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--line);
+    }
+
+    [data-theme="dark"] .topbar {
+      background: rgba(13, 20, 16, .92);
     }
 
     .brand {
@@ -142,7 +143,7 @@
       display: grid;
       place-items: center;
       border-radius: 16px;
-      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      background: linear-gradient(135deg, #12372a, #2f6f4e);
       color: white;
       box-shadow: var(--shadow);
     }
@@ -154,8 +155,8 @@
 
     .brand strong {
       display: block;
-      font-size: 1rem;
       line-height: 1.1;
+      font-size: 1rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -167,22 +168,24 @@
       font-size: .88rem;
     }
 
-    .top-actions {
+    .top-actions,
+    .toolbar {
       display: flex;
       align-items: center;
-      gap: .5rem;
+      flex-wrap: wrap;
+      gap: .65rem;
     }
 
     .btn,
     .icon-btn {
-      min-height: var(--tap);
-      min-width: var(--tap);
-      border: 0;
-      border-radius: 999px;
+      min-height: 46px;
+      min-width: 46px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: .5rem;
+      gap: .45rem;
+      border: 0;
+      border-radius: 999px;
       color: var(--text);
       background: var(--card);
       box-shadow: inset 0 0 0 1px var(--line);
@@ -191,7 +194,7 @@
     }
 
     .btn {
-      padding: .75rem 1rem;
+      padding: .72rem 1rem;
       font-weight: 800;
     }
 
@@ -208,13 +211,13 @@
 
     .btn-primary {
       color: white;
-      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      background: linear-gradient(135deg, #12372a, #2f6f4e);
       box-shadow: none;
     }
 
     .btn-accent {
       color: #241806;
-      background: linear-gradient(135deg, var(--accent), #f3c46f);
+      background: linear-gradient(135deg, #d39b42, #f3c46f);
       box-shadow: none;
     }
 
@@ -227,29 +230,26 @@
     .btn-small {
       min-height: 40px;
       min-width: 40px;
-      padding: .55rem .75rem;
+      padding: .52rem .75rem;
       font-size: .9rem;
     }
 
     .hero {
-      position: relative;
-      overflow: hidden;
       display: grid;
-      gap: 1.25rem;
-      padding: 1.5rem;
+      gap: 1rem;
+      padding: 1.4rem;
       border: 1px solid var(--line);
-      border-radius: 30px;
-      background: linear-gradient(135deg, var(--card-soft), var(--card));
+      border-radius: 28px;
+      background: linear-gradient(135deg, var(--soft), var(--card));
       box-shadow: var(--shadow);
     }
 
     .eyebrow {
-      display: inline-flex;
       width: fit-content;
       padding: .35rem .7rem;
       border-radius: 999px;
-      background: color-mix(in srgb, var(--brand-2) 14%, transparent);
       color: var(--brand);
+      background: rgba(47, 111, 78, .12);
       font-size: .78rem;
       font-weight: 900;
       letter-spacing: .04em;
@@ -266,7 +266,7 @@
 
     h1 {
       max-width: 13ch;
-      font-size: clamp(2.2rem, 10vw, 4.8rem);
+      font-size: clamp(2.2rem, 10vw, 4.7rem);
     }
 
     h2 {
@@ -281,18 +281,10 @@
       margin: 0;
     }
 
-    .hero p {
-      max-width: 64ch;
+    .hero p,
+    .panel-header p,
+    .hint {
       color: var(--muted);
-      font-size: 1.05rem;
-    }
-
-    .hero-actions,
-    .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .7rem;
-      align-items: center;
     }
 
     .main-grid {
@@ -302,26 +294,21 @@
     }
 
     .panel {
+      overflow: hidden;
       border: 1px solid var(--line);
       border-radius: 26px;
-      background: color-mix(in srgb, var(--card-soft) 88%, transparent);
+      background: var(--soft);
       box-shadow: var(--shadow);
-      overflow: hidden;
     }
 
     .panel-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
       padding: 1.2rem;
       border-bottom: 1px solid var(--line);
-      background: color-mix(in srgb, var(--card) 70%, transparent);
+      background: var(--card);
     }
 
     .panel-header p {
       margin-top: .35rem;
-      color: var(--muted);
     }
 
     .panel-body {
@@ -334,16 +321,16 @@
     }
 
     fieldset {
-      border: 0;
-      padding: 0;
       margin: 0;
+      padding: 0;
+      border: 0;
     }
 
     legend {
       width: 100%;
       margin-bottom: .8rem;
-      font-weight: 900;
       font-size: 1.08rem;
+      font-weight: 900;
     }
 
     .form-grid {
@@ -358,21 +345,21 @@
 
     label,
     .group-label {
-      font-weight: 800;
       font-size: .94rem;
+      font-weight: 800;
     }
 
     input,
     select,
     textarea {
       width: 100%;
-      min-height: var(--tap);
+      min-height: 46px;
       padding: .78rem .9rem;
-      color: var(--text);
-      background: var(--card);
       border: 1px solid var(--line);
       border-radius: 14px;
       outline: 0;
+      color: var(--text);
+      background: var(--card);
     }
 
     textarea {
@@ -384,7 +371,7 @@
     select:focus,
     textarea:focus {
       border-color: var(--focus);
-      box-shadow: 0 0 0 4px color-mix(in srgb, var(--focus) 18%, transparent);
+      box-shadow: 0 0 0 4px rgba(11, 112, 255, .18);
     }
 
     .field.invalid input,
@@ -396,12 +383,11 @@
     .error {
       min-height: 1.05rem;
       color: var(--danger);
-      font-weight: 700;
       font-size: .82rem;
+      font-weight: 700;
     }
 
     .hint {
-      color: var(--muted);
       font-size: .85rem;
     }
 
@@ -416,15 +402,14 @@
 
     .radio-card input {
       position: absolute;
-      opacity: 0;
       inset: 0;
+      opacity: 0;
     }
 
     .radio-card span {
       min-height: 66px;
       display: flex;
       align-items: center;
-      gap: .7rem;
       padding: .85rem;
       border: 1px solid var(--line);
       border-radius: 18px;
@@ -434,8 +419,8 @@
 
     .radio-card input:checked + span {
       border-color: var(--brand-2);
-      background: color-mix(in srgb, var(--brand-2) 12%, var(--card));
-      box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-2) 12%, transparent);
+      background: rgba(47, 111, 78, .12);
+      box-shadow: 0 0 0 4px rgba(47, 111, 78, .10);
     }
 
     .radio-card input:focus-visible + span {
@@ -451,7 +436,10 @@
     .receipt-card {
       position: relative;
       display: grid;
-      gap: 1.2rem;
+      gap: 1.1rem;
+      width: 100%;
+      max-width: 780px;
+      margin: 0 auto;
       padding: 1.2rem;
       border: 1px solid #d7cbbd;
       border-radius: 24px;
@@ -466,8 +454,8 @@
       inset: 0;
       pointer-events: none;
       background:
-        radial-gradient(circle at top right, rgba(211,155,66,.22), transparent 15rem),
-        linear-gradient(90deg, rgba(18,55,42,.09), transparent 55%);
+        radial-gradient(circle at top right, rgba(211, 155, 66, .22), transparent 15rem),
+        linear-gradient(90deg, rgba(18, 55, 42, .08), transparent 55%);
     }
 
     .receipt-card > * {
@@ -480,7 +468,7 @@
       align-items: flex-start;
       justify-content: space-between;
       gap: 1rem;
-      padding-bottom: 1rem;
+      padding-bottom: .9rem;
       border-bottom: 2px solid #d7cbbd;
     }
 
@@ -513,6 +501,7 @@
 
     .church small,
     .receipt-number,
+    .receipt-title p,
     .detail span:first-child,
     .receipt-footer {
       color: #607064;
@@ -534,15 +523,11 @@
       font-size: clamp(1.8rem, 7vw, 3rem);
     }
 
-    .receipt-title p {
-      color: #607064;
-    }
-
     .amount-box {
       padding: 1rem;
       border: 1px solid #d7cbbd;
       border-radius: 20px;
-      background: linear-gradient(135deg, rgba(211,155,66,.2), rgba(47,111,78,.13));
+      background: linear-gradient(135deg, rgba(211, 155, 66, .2), rgba(47, 111, 78, .13));
     }
 
     .amount-box span {
@@ -558,7 +543,7 @@
       display: block;
       margin-top: .2rem;
       color: #12372a;
-      font-size: clamp(2rem, 11vw, 4rem);
+      font-size: clamp(2rem, 10vw, 4rem);
       line-height: 1;
       letter-spacing: -.06em;
     }
@@ -571,7 +556,7 @@
     .detail {
       display: grid;
       gap: .2rem;
-      padding: .72rem 0;
+      padding: .68rem 0;
       border-bottom: 1px dashed #d7cbbd;
     }
 
@@ -584,6 +569,7 @@
 
     .detail span:last-child {
       font-weight: 800;
+      overflow-wrap: anywhere;
     }
 
     .thanks {
@@ -601,20 +587,20 @@
     }
 
     .thanks p {
-      color: rgba(255,250,241,.9);
+      color: rgba(255, 250, 241, .92);
     }
 
     .receipt-footer {
       display: grid;
       gap: .5rem;
-      padding-top: 1rem;
+      padding-top: .9rem;
       border-top: 1px solid #d7cbbd;
       font-size: .84rem;
     }
 
     .signature {
       width: min(280px, 100%);
-      margin-top: 1rem;
+      margin-top: .9rem;
       padding-top: .55rem;
       border-top: 1px solid #9d907e;
       color: #17211c;
@@ -676,8 +662,8 @@
     }
 
     th {
-      background: color-mix(in srgb, var(--brand-2) 10%, var(--card));
       color: var(--muted);
+      background: rgba(47, 111, 78, .1);
       font-size: .75rem;
       letter-spacing: .05em;
       text-transform: uppercase;
@@ -694,8 +680,8 @@
       padding: .25rem .55rem;
       border-radius: 999px;
       color: var(--brand);
-      background: color-mix(in srgb, var(--brand-2) 13%, transparent);
-      border: 1px solid color-mix(in srgb, var(--brand-2) 24%, var(--line));
+      background: rgba(47, 111, 78, .13);
+      border: 1px solid rgba(47, 111, 78, .24);
       font-size: .8rem;
       font-weight: 900;
       white-space: nowrap;
@@ -718,7 +704,7 @@
       align-items: center;
       justify-content: center;
       padding: 1rem;
-      background: rgba(0,0,0,.58);
+      background: rgba(0, 0, 0, .58);
       backdrop-filter: blur(8px);
     }
 
@@ -731,9 +717,9 @@
       max-height: 86vh;
       overflow: hidden;
       display: grid;
-      background: var(--card-soft);
       border: 1px solid var(--line);
       border-radius: 24px;
+      background: var(--soft);
       box-shadow: var(--shadow);
     }
 
@@ -808,6 +794,7 @@
 
       .detail {
         grid-template-columns: 150px 1fr;
+        align-items: center;
       }
     }
 
@@ -849,7 +836,7 @@
 
     @media (min-width: 1024px) {
       .main-grid {
-        grid-template-columns: minmax(0, 1fr) minmax(420px, .75fr);
+        grid-template-columns: minmax(0, 1fr) minmax(430px, .75fr);
         align-items: start;
       }
 
@@ -872,12 +859,18 @@
 
     @media print {
       @page {
-        size: letter;
-        margin: .45in;
+        size: Letter;
+        margin: 0.45in;
       }
 
+      html,
       body {
+        width: 100%;
+        min-width: 0;
+        margin: 0 !important;
+        padding: 0 !important;
         background: white !important;
+        color: #17211c !important;
       }
 
       body * {
@@ -891,22 +884,99 @@
 
       #printArea {
         position: absolute !important;
-        inset: 0 auto auto 0 !important;
+        top: 0 !important;
+        left: 0 !important;
         width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        background: white !important;
       }
 
       #printArea .panel-header {
         display: none !important;
       }
 
-      #printArea,
+      #printArea .panel-body {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+      }
+
+      #printArea.panel,
       #printArea .panel,
-      #printArea .panel-body,
-      #printArea .receipt-card {
-        box-shadow: none !important;
+      #printArea .panel-body {
         border: 0 !important;
         border-radius: 0 !important;
-        background: white !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+      }
+
+      .receipt-card {
+        width: 100% !important;
+        max-width: 7.4in !important;
+        min-height: 9.35in !important;
+        margin: 0 auto !important;
+        padding: 0.34in !important;
+        border: 1px solid #d7cbbd !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background: #fffaf1 !important;
+        color: #17211c !important;
+        overflow: visible !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+
+      .receipt-card::before {
+        background:
+          radial-gradient(circle at top right, rgba(211, 155, 66, .16), transparent 2.4in),
+          linear-gradient(90deg, rgba(18, 55, 42, .05), transparent 55%) !important;
+      }
+
+      .receipt-top {
+        display: flex !important;
+        align-items: flex-start !important;
+        justify-content: space-between !important;
+      }
+
+      .receipt-details.two {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 0.3in !important;
+      }
+
+      .detail {
+        display: grid !important;
+        grid-template-columns: 1.2in 1fr !important;
+        gap: .12in !important;
+        padding: .09in 0 !important;
+      }
+
+      .amount-box strong {
+        font-size: 34pt !important;
+      }
+
+      .receipt-title h2 {
+        font-size: 25pt !important;
+      }
+
+      .seal {
+        width: .58in !important;
+        height: .58in !important;
+        border-radius: .14in !important;
+      }
+
+      .seal svg {
+        width: .36in !important;
+        height: .36in !important;
+      }
+
+      .thanks {
+        padding: .18in !important;
+        border-radius: .12in !important;
       }
 
       .no-print {
@@ -917,15 +987,15 @@
 </head>
 
 <body>
-  <a class="skip-link" href="#mainContent">Saltar al contenido principal</a>
+  <a class="skip-link no-print" href="#mainContent">Saltar al contenido principal</a>
 
   <div class="app">
     <header class="topbar no-print">
       <div class="brand" aria-label="Iglesia Jesús te ama">
         <div class="brand-mark" aria-hidden="true">
           <svg viewBox="0 0 64 64" fill="none">
-            <path d="M32 54s22-12.6 22-31.1C54 13.9 47.6 8 40.3 8c-4.3 0-7.1 2.1-8.3 4-1.2-1.9-4-4-8.3-4C16.4 8 10 13.9 10 22.9 10 41.4 32 54 32 54Z" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/>
-            <path d="M32 18v22M22 28h20" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+            <path d="M32 54s22-12.6 22-31.1C54 13.9 47.6 8 40.3 8c-4.3 0-7.1 2.1-8.3 4-1.2-1.9-4-4-8.3-4C16.4 8 10 13.9 10 22.9 10 41.4 32 54 32 54Z" stroke="currentColor" stroke-width="5" stroke-linejoin="round"></path>
+            <path d="M32 18v22M22 28h20" stroke="currentColor" stroke-width="5" stroke-linecap="round"></path>
           </svg>
         </div>
         <div>
@@ -948,7 +1018,7 @@
           Crea recibos de contribuciones para donantes, registra pagos en efectivo u otros medios,
           imprime o guarda como PDF y prepara un correo de agradecimiento de parte de la iglesia Jesús te ama.
         </p>
-        <div class="hero-actions">
+        <div class="toolbar">
           <button class="btn btn-primary" id="goFormBtn" type="button">Crear recibo</button>
           <button class="btn btn-accent" id="heroPrintBtn" type="button">Convertir a PDF</button>
         </div>
@@ -957,10 +1027,8 @@
       <div class="main-grid">
         <section class="panel no-print" aria-labelledby="formTitle">
           <div class="panel-header">
-            <div>
-              <h2 id="formTitle">Nuevo recibo</h2>
-              <p>Completa los datos. La vista previa se actualiza automáticamente.</p>
-            </div>
+            <h2 id="formTitle">Nuevo recibo</h2>
+            <p>Completa los datos. La vista previa se actualiza automáticamente.</p>
           </div>
 
           <div class="panel-body">
@@ -1045,6 +1113,21 @@
                     </label>
 
                     <label class="radio-card">
+                      <input type="radio" name="paymentMethod" value="Cheque">
+                      <span>Cheque</span>
+                    </label>
+
+                    <label class="radio-card">
+                      <input type="radio" name="paymentMethod" value="Tarjeta">
+                      <span>Tarjeta</span>
+                    </label>
+
+                    <label class="radio-card">
+                      <input type="radio" name="paymentMethod" value="Bizum / pago móvil">
+                      <span>Bizum / pago móvil</span>
+                    </label>
+
+                    <label class="radio-card">
                       <input type="radio" name="paymentMethod" value="Otro medio">
                       <span>Otro medio</span>
                     </label>
@@ -1120,10 +1203,8 @@
         <aside class="preview" aria-labelledby="previewTitle">
           <section class="panel" id="printArea">
             <div class="panel-header no-print">
-              <div>
-                <h2 id="previewTitle">Vista previa</h2>
-                <p>Este recibo se imprimirá o guardará como PDF.</p>
-              </div>
+              <h2 id="previewTitle">Vista previa</h2>
+              <p>Este recibo se imprimirá o guardará como PDF.</p>
             </div>
 
             <div class="panel-body">
@@ -1132,8 +1213,8 @@
                   <div class="church">
                     <div class="seal" aria-hidden="true">
                       <svg viewBox="0 0 64 64" fill="none">
-                        <path d="M32 54s22-12.6 22-31.1C54 13.9 47.6 8 40.3 8c-4.3 0-7.1 2.1-8.3 4-1.2-1.9-4-4-8.3-4C16.4 8 10 13.9 10 22.9 10 41.4 32 54 32 54Z" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/>
-                        <path d="M32 18v22M22 28h20" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+                        <path d="M32 54s22-12.6 22-31.1C54 13.9 47.6 8 40.3 8c-4.3 0-7.1 2.1-8.3 4-1.2-1.9-4-4-8.3-4C16.4 8 10 13.9 10 22.9 10 41.4 32 54 32 54Z" stroke="currentColor" stroke-width="5" stroke-linejoin="round"></path>
+                        <path d="M32 18v22M22 28h20" stroke="currentColor" stroke-width="5" stroke-linecap="round"></path>
                       </svg>
                     </div>
                     <div>
@@ -1228,10 +1309,8 @@
 
       <section class="panel no-print" style="margin-top:1rem;" aria-labelledby="savedTitle">
         <div class="panel-header">
-          <div>
-            <h2 id="savedTitle">Recibos guardados</h2>
-            <p>Busca, carga, imprime, envía o elimina recibos guardados en este navegador.</p>
-          </div>
+          <h2 id="savedTitle">Recibos guardados</h2>
+          <p>Busca, carga, imprime, envía o elimina recibos guardados en este navegador.</p>
         </div>
 
         <div class="panel-body">
@@ -1339,9 +1418,9 @@
     (function () {
       "use strict";
 
-      var STORAGE_KEY = "recibos_jesus_te_ama_v2";
-      var NUMBER_KEY = "recibos_jesus_te_ama_next_number_v2";
-      var THEME_KEY = "recibos_jesus_te_ama_theme_v2";
+      var STORAGE_KEY = "recibos_jesus_te_ama_v3";
+      var NUMBER_KEY = "recibos_jesus_te_ama_next_number_v3";
+      var THEME_KEY = "recibos_jesus_te_ama_theme_v3";
 
       var receipts = [];
       var activeReceipt = null;
@@ -1375,13 +1454,16 @@
         if (window.crypto && typeof window.crypto.randomUUID === "function") {
           return window.crypto.randomUUID();
         }
+
         return String(Date.now()) + "-" + Math.random().toString(16).slice(2);
       }
 
       function formatDate(iso) {
         if (!iso) return "—";
+
         var parts = iso.split("-");
         var date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+
         return new Intl.DateTimeFormat("es", {
           year: "numeric",
           month: "long",
@@ -1391,6 +1473,7 @@
 
       function formatMoney(amount, currency) {
         var value = Number(amount || 0);
+
         try {
           return new Intl.NumberFormat("es", {
             style: "currency",
@@ -1419,7 +1502,6 @@
       }
 
       function getFormData() {
-        var form = $("#receiptForm");
         var paymentInput = $("input[name='paymentMethod']:checked");
 
         return {
@@ -1579,9 +1661,10 @@
         }
 
         setPreview(activeReceipt || result.data);
+
         window.setTimeout(function () {
           window.print();
-        }, 80);
+        }, 120);
       }
 
       function makeEmailBody(receipt) {
@@ -1613,10 +1696,12 @@
 
         if (!receipt) {
           var result = validateForm();
+
           if (!result.valid) {
             showToast("Faltan datos", "Completa nombre, correo, importe y fecha antes de enviar.");
             return;
           }
+
           r = result.data;
         }
 
@@ -1701,6 +1786,7 @@
 
       function renderReceipts() {
         var query = normalize($("#searchInput").value);
+
         var filtered = receipts.filter(function (r) {
           var haystack = [
             r.receiptNumber,
@@ -1856,7 +1942,9 @@
           toast.style.transition = "opacity .2s ease, transform .2s ease";
 
           window.setTimeout(function () {
-            if (toast.parentNode) toast.parentNode.removeChild(toast);
+            if (toast.parentNode) {
+              toast.parentNode.removeChild(toast);
+            }
           }, 260);
         }, 3800);
       }
@@ -1909,9 +1997,11 @@
 
         $("#printBtn").addEventListener("click", printReceipt);
         $("#heroPrintBtn").addEventListener("click", printReceipt);
+
         $("#emailBtn").addEventListener("click", function () {
           emailReceipt(null);
         });
+
         $("#resetBtn").addEventListener("click", resetForm);
 
         $("#goFormBtn").addEventListener("click", function () {
@@ -1966,7 +2056,7 @@
             setPreview(receipt);
             window.setTimeout(function () {
               window.print();
-            }, 80);
+            }, 120);
           }
 
           if (action === "delete") {
@@ -1988,2259 +2078,6 @@
 
         showToast("Aplicación lista", "Ya puedes crear recibos de contribuciones.");
       }
-
-      document.addEventListener("DOMContentLoaded", init);
-    })();
-  </script>
-</body>
-</html>      --brand-2: #72ca95;
-      --accent: #f0bd61;
-      --accent-2: #87621d;
-      --danger: #ff8f8f;
-      --success: #7ae0a6;
-      --warning: #ffd37a;
-      --shadow: 0 18px 50px rgba(0,0,0,.34);
-      --shadow-soft: 0 8px 28px rgba(0,0,0,.22);
-    }
-
-    * { box-sizing: border-box; }
-
-    html {
-      scroll-behavior: smooth;
-      -webkit-text-size-adjust: 100%;
-    }
-
-    body {
-      margin: 0;
-      min-width: 320px;
-      font-family: var(--font);
-      color: var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(211,155,66,.18), transparent 34rem),
-        radial-gradient(circle at 85% 12%, rgba(47,111,78,.14), transparent 32rem),
-        var(--bg);
-      line-height: 1.5;
-    }
-
-    body.modal-open { overflow: hidden; }
-
-    button, input, select, textarea {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    button:disabled {
-      cursor: not-allowed;
-      opacity: .58;
-    }
-
-    a {
-      color: var(--brand-2);
-      text-decoration-thickness: .12em;
-      text-underline-offset: .18em;
-    }
-
-    :focus-visible {
-      outline: 3px solid var(--focus);
-      outline-offset: 3px;
-      border-radius: var(--radius-sm);
-    }
-
-    .skip-link {
-      position: fixed;
-      top: .75rem;
-      left: .75rem;
-      z-index: 9999;
-      transform: translateY(-160%);
-      background: var(--brand);
-      color: var(--surface-2);
-      padding: .75rem 1rem;
-      border-radius: 999px;
-      box-shadow: var(--shadow);
-      transition: transform var(--normal);
-    }
-
-    .skip-link:focus { transform: translateY(0); }
-
-    .app-shell {
-      width: min(1440px, 100%);
-      margin: 0 auto;
-      padding: var(--space-4);
-    }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-4);
-      min-height: 76px;
-      padding: .8rem var(--space-4);
-      margin: calc(var(--space-4) * -1) calc(var(--space-4) * -1) var(--space-5);
-      background: color-mix(in srgb, var(--surface) 88%, transparent);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
-    }
-
-    .brand-lockup {
-      display: flex;
-      align-items: center;
-      gap: .75rem;
-      min-width: 0;
-    }
-
-    .brand-mark {
-      width: 48px;
-      height: 48px;
-      flex: 0 0 auto;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      color: #fff;
-      background:
-        radial-gradient(circle at 35% 25%, rgba(255,255,255,.35), transparent 28%),
-        linear-gradient(135deg, var(--brand), var(--brand-2));
-      box-shadow: var(--shadow-soft);
-    }
-
-    .brand-mark svg { width: 30px; height: 30px; }
-
-    .brand-text {
-      min-width: 0;
-    }
-
-    .brand-text strong {
-      display: block;
-      font-size: clamp(1rem, 4vw, 1.35rem);
-      letter-spacing: -.03em;
-      line-height: 1.1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .brand-text span {
-      display: none;
-      color: var(--muted);
-      font-size: .9rem;
-    }
-
-    .top-actions {
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-    }
-
-    .icon-btn,
-    .btn {
-      min-height: var(--tap);
-      min-width: var(--tap);
-      border: 0;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: .55rem;
-      background: var(--surface-2);
-      color: var(--text);
-      box-shadow: 0 1px 0 rgba(0,0,0,.04), inset 0 0 0 1px var(--line);
-      transition: transform var(--fast), box-shadow var(--fast), background var(--fast);
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .icon-btn:hover,
-    .btn:hover {
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .icon-btn:active,
-    .btn:active {
-      transform: translateY(0) scale(.98);
-    }
-
-    .btn {
-      padding: .75rem 1rem;
-      font-weight: 800;
-      letter-spacing: -.01em;
-    }
-
-    .btn-primary {
-      color: #fff;
-      background: linear-gradient(135deg, var(--brand), var(--brand-2));
-      box-shadow: var(--shadow-soft);
-    }
-
-    .btn-accent {
-      color: #241806;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: var(--shadow-soft);
-    }
-
-    .btn-ghost {
-      background: transparent;
-      box-shadow: inset 0 0 0 1px var(--line);
-    }
-
-    .btn-danger {
-      color: #fff;
-      background: var(--danger);
-    }
-
-    .btn-small {
-      min-height: 40px;
-      min-width: 40px;
-      padding: .55rem .8rem;
-      font-size: .9rem;
-    }
-
-    .label-hidden-mobile {
-      display: none;
-    }
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      display: grid;
-      gap: var(--space-5);
-      padding: var(--space-6);
-      border-radius: var(--radius-xl);
-      background:
-        linear-gradient(135deg, color-mix(in srgb, var(--surface) 96%, transparent), color-mix(in srgb, var(--surface-3) 70%, transparent)),
-        var(--surface);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      isolation: isolate;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      width: 18rem;
-      height: 18rem;
-      right: -8rem;
-      top: -9rem;
-      border-radius: 50%;
-      background: radial-gradient(circle, color-mix(in srgb, var(--accent) 42%, transparent), transparent 68%);
-      z-index: -1;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: .45rem;
-      width: fit-content;
-      padding: .38rem .7rem;
-      border-radius: 999px;
-      background: color-mix(in srgb, var(--brand-2) 12%, transparent);
-      color: var(--brand);
-      font-size: .82rem;
-      font-weight: 900;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-    }
-
-    h1, h2, h3 {
-      margin: 0;
-      line-height: 1.08;
-      letter-spacing: -.045em;
-    }
-
-    h1 {
-      max-width: 13ch;
-      font-size: clamp(2.35rem, 12vw, 5rem);
-    }
-
-    h2 {
-      font-size: clamp(1.6rem, 6vw, 2.45rem);
-    }
-
-    h3 {
-      font-size: clamp(1.15rem, 4vw, 1.5rem);
-    }
-
-    p {
-      margin: 0;
-    }
-
-    .hero-copy {
-      max-width: 63ch;
-      color: var(--muted);
-      font-size: clamp(1rem, 2.8vw, 1.15rem);
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .75rem;
-    }
-
-    .trust-grid {
-      display: grid;
-      gap: .75rem;
-      grid-template-columns: 1fr;
-      margin-top: var(--space-4);
-    }
-
-    .trust-card {
-      padding: 1rem;
-      border-radius: var(--radius-lg);
-      background: color-mix(in srgb, var(--surface-2) 72%, transparent);
-      border: 1px solid var(--line);
-    }
-
-    .trust-card strong {
-      display: block;
-      margin-bottom: .25rem;
-      font-size: .95rem;
-    }
-
-    .trust-card span {
-      color: var(--muted);
-      font-size: .9rem;
-    }
-
-    .main-grid {
-      display: grid;
-      gap: var(--space-5);
-      margin-top: var(--space-5);
-    }
-
-    .panel {
-      background: color-mix(in srgb, var(--surface) 92%, transparent);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-soft);
-      overflow: clip;
-    }
-
-    .panel-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: var(--space-4);
-      padding: var(--space-5);
-      border-bottom: 1px solid var(--line);
-      background: linear-gradient(180deg, color-mix(in srgb, var(--surface-2) 74%, transparent), transparent);
-    }
-
-    .panel-header p {
-      margin-top: .4rem;
-      color: var(--muted);
-    }
-
-    .panel-body {
-      padding: var(--space-5);
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: .5rem;
-      margin-bottom: var(--space-5);
-    }
-
-    .step {
-      display: grid;
-      gap: .35rem;
-      align-content: start;
-      min-height: 72px;
-      padding: .75rem;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-      background: var(--surface-2);
-      color: var(--muted);
-      transition: transform var(--normal), border-color var(--normal), background var(--normal);
-    }
-
-    .step[aria-current="step"] {
-      color: var(--text);
-      border-color: color-mix(in srgb, var(--brand-2) 42%, var(--line));
-      background: color-mix(in srgb, var(--brand-2) 12%, var(--surface-2));
-      transform: translateY(-2px);
-    }
-
-    .step-number {
-      display: grid;
-      place-items: center;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      font-weight: 900;
-      color: #fff;
-      background: var(--brand-2);
-      font-size: .8rem;
-    }
-
-    .step span:last-child {
-      font-size: .82rem;
-      font-weight: 800;
-    }
-
-    form {
-      display: grid;
-      gap: var(--space-5);
-    }
-
-    fieldset {
-      margin: 0;
-      padding: 0;
-      border: 0;
-    }
-
-    legend {
-      width: 100%;
-      margin-bottom: var(--space-3);
-      font-weight: 900;
-      font-size: 1.05rem;
-      letter-spacing: -.02em;
-    }
-
-    .form-grid {
-      display: grid;
-      gap: var(--space-4);
-    }
-
-    .field {
-      display: grid;
-      gap: .42rem;
-    }
-
-    .field label,
-    .radio-group-label {
-      color: var(--text);
-      font-weight: 800;
-      font-size: .94rem;
-    }
-
-    .field .hint {
-      color: var(--muted);
-      font-size: .86rem;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      min-height: var(--tap);
-      padding: .78rem .9rem;
-      color: var(--text);
-      background: var(--surface-2);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-      outline: 0;
-      transition: border-color var(--fast), box-shadow var(--fast), background var(--fast);
-    }
-
-    textarea {
-      min-height: 104px;
-      resize: vertical;
-    }
-
-    input:hover,
-    select:hover,
-    textarea:hover {
-      border-color: color-mix(in srgb, var(--brand-2) 45%, var(--line));
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--focus);
-      box-shadow: 0 0 0 4px color-mix(in srgb, var(--focus) 18%, transparent);
-    }
-
-    .field.invalid input,
-    .field.invalid select,
-    .field.invalid textarea {
-      border-color: var(--danger);
-    }
-
-    .error-text {
-      min-height: 1.1rem;
-      color: var(--danger);
-      font-weight: 700;
-      font-size: .84rem;
-    }
-
-    .radio-cards {
-      display: grid;
-      gap: .75rem;
-      grid-template-columns: 1fr;
-    }
-
-    .radio-card {
-      position: relative;
-    }
-
-    .radio-card input {
-      position: absolute;
-      opacity: 0;
-      inset: 0;
-      cursor: pointer;
-    }
-
-    .radio-card span {
-      min-height: 72px;
-      display: flex;
-      align-items: center;
-      gap: .75rem;
-      padding: .9rem;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      background: var(--surface-2);
-      transition: transform var(--fast), border-color var(--fast), background var(--fast), box-shadow var(--fast);
-    }
-
-    .radio-card svg {
-      width: 28px;
-      height: 28px;
-      color: var(--brand-2);
-      flex: 0 0 auto;
-    }
-
-    .radio-card input:checked + span {
-      border-color: color-mix(in srgb, var(--brand-2) 62%, var(--line));
-      background: color-mix(in srgb, var(--brand-2) 12%, var(--surface-2));
-      box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-2) 10%, transparent);
-    }
-
-    .radio-card input:focus-visible + span {
-      outline: 3px solid var(--focus);
-      outline-offset: 3px;
-    }
-
-    .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .7rem;
-      align-items: center;
-    }
-
-    .divider {
-      height: 1px;
-      background: var(--line);
-      margin: var(--space-3) 0;
-    }
-
-    .receipt-card {
-      position: relative;
-      display: grid;
-      gap: var(--space-5);
-      padding: clamp(1.2rem, 4vw, 2rem);
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.82), rgba(255,255,255,.35)),
-        var(--surface-2);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-soft);
-      overflow: hidden;
-      color: #17211c;
-    }
-
-    [data-theme="dark"] .receipt-card {
-      background: #fffaf1;
-      color: #17211c;
-      --muted: #607064;
-      --line: #d7cbbd;
-      --surface-2: #fffaf1;
-    }
-
-    .receipt-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at top right, rgba(211,155,66,.18), transparent 16rem),
-        linear-gradient(90deg, rgba(18,55,42,.10), transparent 26%);
-    }
-
-    .receipt-card > * {
-      position: relative;
-      z-index: 1;
-    }
-
-    .receipt-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: var(--space-4);
-      border-bottom: 2px solid #d7cbbd;
-      padding-bottom: var(--space-4);
-    }
-
-    .church-seal {
-      display: flex;
-      align-items: center;
-      gap: .85rem;
-    }
-
-    .seal-icon {
-      width: 58px;
-      height: 58px;
-      border-radius: 20px;
-      display: grid;
-      place-items: center;
-      color: #fff;
-      background: linear-gradient(135deg, #12372a, #2f6f4e);
-    }
-
-    .seal-icon svg { width: 34px; height: 34px; }
-
-    .church-seal strong {
-      display: block;
-      font-size: 1.25rem;
-      letter-spacing: -.03em;
-    }
-
-    .church-seal small {
-      color: #607064;
-      font-weight: 700;
-    }
-
-    .receipt-number {
-      text-align: right;
-      color: #607064;
-      font-size: .9rem;
-    }
-
-    .receipt-number strong {
-      display: block;
-      color: #17211c;
-      font-size: 1.05rem;
-    }
-
-    .receipt-title {
-      display: grid;
-      gap: .35rem;
-    }
-
-    .receipt-title h2 {
-      color: #12372a;
-      font-size: clamp(1.8rem, 7vw, 3rem);
-    }
-
-    .receipt-title p {
-      color: #607064;
-    }
-
-    .receipt-details {
-      display: grid;
-      gap: .75rem;
-    }
-
-    .detail-row {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: .35rem;
-      padding: .82rem 0;
-      border-bottom: 1px dashed #d7cbbd;
-    }
-
-    .detail-row span:first-child {
-      color: #607064;
-      font-size: .86rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .05em;
-    }
-
-    .detail-row span:last-child {
-      font-size: 1.02rem;
-      font-weight: 800;
-    }
-
-    .amount-box {
-      display: grid;
-      gap: .35rem;
-      padding: 1.15rem;
-      border-radius: 22px;
-      background: linear-gradient(135deg, rgba(211,155,66,.2), rgba(47,111,78,.12));
-      border: 1px solid #d7cbbd;
-    }
-
-    .amount-box span:first-child {
-      color: #607064;
-      font-size: .86rem;
-      font-weight: 900;
-      letter-spacing: .05em;
-      text-transform: uppercase;
-    }
-
-    .amount-box strong {
-      color: #12372a;
-      font-size: clamp(2rem, 10vw, 4.2rem);
-      letter-spacing: -.06em;
-      line-height: .98;
-    }
-
-    .thanks {
-      padding: 1rem;
-      border-radius: 20px;
-      background: #12372a;
-      color: #fffaf1;
-    }
-
-    .thanks strong {
-      display: block;
-      margin-bottom: .35rem;
-      font-family: var(--serif);
-      font-size: 1.2rem;
-    }
-
-    .thanks p {
-      color: rgba(255,250,241,.9);
-    }
-
-    .receipt-footer {
-      display: grid;
-      gap: .5rem;
-      color: #607064;
-      font-size: .85rem;
-      border-top: 1px solid #d7cbbd;
-      padding-top: var(--space-4);
-    }
-
-    .signature-line {
-      margin-top: 1.5rem;
-      padding-top: .65rem;
-      border-top: 1px solid #9d907e;
-      width: min(280px, 100%);
-      color: #17211c;
-      font-weight: 800;
-    }
-
-    .library-tools {
-      display: grid;
-      gap: var(--space-4);
-      margin-bottom: var(--space-4);
-    }
-
-    .search-row {
-      display: grid;
-      gap: .75rem;
-    }
-
-    .stats-grid {
-      display: grid;
-      gap: .75rem;
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .stat {
-      padding: 1rem;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      background: var(--surface-2);
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 1.45rem;
-      letter-spacing: -.04em;
-      color: var(--brand);
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: .86rem;
-      font-weight: 700;
-    }
-
-    .table-wrap {
-      overflow: auto;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      background: var(--surface-2);
-    }
-
-    table {
-      width: 100%;
-      min-width: 760px;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      padding: .85rem;
-      text-align: left;
-      border-bottom: 1px solid var(--line);
-      vertical-align: middle;
-    }
-
-    th {
-      position: sticky;
-      top: 0;
-      z-index: 1;
-      background: var(--surface-3);
-      font-size: .78rem;
-      letter-spacing: .05em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    tr:last-child td { border-bottom: 0; }
-
-    tbody tr {
-      transition: background var(--fast);
-    }
-
-    tbody tr:hover {
-      background: color-mix(in srgb, var(--brand-2) 8%, transparent);
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      min-height: 30px;
-      padding: .25rem .6rem;
-      border-radius: 999px;
-      font-size: .8rem;
-      font-weight: 900;
-      background: color-mix(in srgb, var(--brand-2) 12%, transparent);
-      color: var(--brand);
-      border: 1px solid color-mix(in srgb, var(--brand-2) 22%, var(--line));
-      white-space: nowrap;
-    }
-
-    .empty-state {
-      display: grid;
-      place-items: center;
-      gap: var(--space-3);
-      text-align: center;
-      padding: var(--space-8) var(--space-4);
-      color: var(--muted);
-    }
-
-    .empty-state svg {
-      width: 76px;
-      height: 76px;
-      color: var(--brand-2);
-      opacity: .75;
-    }
-
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: var(--space-4);
-      background: rgba(0,0,0,.58);
-      backdrop-filter: blur(8px);
-    }
-
-    .modal-backdrop.active { display: flex; }
-
-    .modal {
-      width: min(760px, 100%);
-      max-height: min(86vh, 920px);
-      display: grid;
-      overflow: hidden;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow);
-      animation: modalIn var(--normal);
-    }
-
-    @keyframes modalIn {
-      from { opacity: 0; transform: translateY(18px) scale(.98); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    .modal-header,
-    .modal-footer {
-      padding: var(--space-5);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .modal-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: var(--space-4);
-    }
-
-    .modal-footer {
-      border-top: 1px solid var(--line);
-      border-bottom: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: .75rem;
-      justify-content: flex-end;
-    }
-
-    .modal-body {
-      padding: var(--space-5);
-      overflow: auto;
-    }
-
-    .toast-region {
-      position: fixed;
-      right: var(--space-4);
-      bottom: var(--space-4);
-      z-index: 200;
-      display: grid;
-      gap: .75rem;
-      width: min(420px, calc(100% - 2rem));
-      pointer-events: none;
-    }
-
-    .toast {
-      pointer-events: auto;
-      display: grid;
-      gap: .15rem;
-      padding: 1rem;
-      border-radius: var(--radius-lg);
-      color: var(--text);
-      background: var(--surface-2);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      animation: toastIn var(--normal);
-    }
-
-    .toast strong { font-size: .98rem; }
-    .toast span { color: var(--muted); font-size: .9rem; }
-
-    .toast.success { border-color: color-mix(in srgb, var(--success) 40%, var(--line)); }
-    .toast.warning { border-color: color-mix(in srgb, var(--warning) 40%, var(--line)); }
-    .toast.danger { border-color: color-mix(in srgb, var(--danger) 40%, var(--line)); }
-
-    @keyframes toastIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .install-card {
-      display: none;
-      gap: .75rem;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: var(--space-5);
-      padding: 1rem;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--line);
-      background: color-mix(in srgb, var(--accent) 12%, var(--surface-2));
-    }
-
-    .install-card.show { display: flex; }
-
-    .footer {
-      margin-top: var(--space-7);
-      padding: var(--space-6) 0;
-      color: var(--muted);
-      text-align: center;
-      font-size: .9rem;
-    }
-
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0,0,0,0);
-      white-space: nowrap;
-      border: 0;
-    }
-
-    @media (min-width: 520px) {
-      .brand-text span { display: block; }
-
-      .trust-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .radio-cards {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .detail-row {
-        grid-template-columns: 180px 1fr;
-        align-items: center;
-      }
-
-      .search-row {
-        grid-template-columns: 1fr auto;
-        align-items: end;
-      }
-
-      .label-hidden-mobile {
-        display: inline;
-      }
-    }
-
-    @media (min-width: 768px) {
-      .app-shell {
-        padding: var(--space-5);
-      }
-
-      .topbar {
-        margin: calc(var(--space-5) * -1) calc(var(--space-5) * -1) var(--space-5);
-        padding-inline: var(--space-5);
-      }
-
-      .hero {
-        padding: var(--space-8);
-      }
-
-      .form-grid.two {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .form-grid.three {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .stats-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-
-      .receipt-details.two {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .main-grid {
-        grid-template-columns: minmax(0, .95fr) minmax(420px, .75fr);
-        align-items: start;
-      }
-
-      .preview-column {
-        position: sticky;
-        top: 96px;
-      }
-
-      .hero {
-        grid-template-columns: 1.2fr .8fr;
-        align-items: end;
-      }
-
-      .hero-side {
-        justify-self: end;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: .001ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
-        transition-duration: .001ms !important;
-      }
-    }
-
-    @media print {
-      @page {
-        size: letter;
-        margin: .45in;
-      }
-
-      html, body {
-        background: #fff !important;
-        color: #111 !important;
-      }
-
-      body * {
-        visibility: hidden !important;
-      }
-
-      #printArea,
-      #printArea * {
-        visibility: visible !important;
-      }
-
-      #printArea {
-        position: absolute !important;
-        inset: 0 auto auto 0 !important;
-        width: 100% !important;
-        margin: 0 !important;
-      }
-
-      #printArea .receipt-card {
-        box-shadow: none !important;
-        border-radius: 0 !important;
-        border: 0 !important;
-        padding: 0 !important;
-      }
-
-      #printArea .receipt-card::before {
-        display: none !important;
-      }
-
-      .no-print {
-        display: none !important;
-      }
-    }
-  </style>
-</head>
-
-<body>
-  <a class="skip-link" href="#mainContent">Saltar al contenido principal</a>
-
-  <div class="app-shell">
-    <header class="topbar no-print" role="banner">
-      <div class="brand-lockup" aria-label="Iglesia Jesús te ama">
-        <div class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 64 64" fill="none" focusable="false">
-            <path d="M32 54s22-12.6 22-31.1C54 13.9 47.6 8 40.3 8c-4.3 0-7.1 2.1-8.3 4-1.2-1.9-4-4-8.3-4C16.4 8 10 13.9 10 22.9 10 41.4 32 54 32 54Z" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/>
-            <path d="M32 18v22M22 28h20" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div class="brand-text">
-          <strong>Recibos de contribuciones</strong>
-          <span>Iglesia Jesús te ama · Juan 13:34</span>
-        </div>
-      </div>
-
-      <div class="top-actions">
-        <button class="icon-btn" id="themeToggle" type="button" aria-label="Cambiar modo claro u oscuro" title="Cambiar tema">
-          <span aria-hidden="true" id="themeIcon">☾</span>
-        </button>
-        <button class="btn btn-ghost btn-small" id="openHelpBtn" type="button">
-          Ayuda
-        </button>
-      </div>
-    </header>
-
-    <main id="mainContent" tabindex="-1">
-      <section class="hero no-print" aria-labelledby="heroTitle">
-        <div>
-          <span class="eyebrow">Gestión local y privada</span>
-          <h1 id="heroTitle">Crea recibos claros, cálidos y listos para PDF.</h1>
-          <p class="hero-copy">
-            Registra contribuciones en efectivo, transferencia, cheque, tarjeta u otros medios,
-            genera un recibo profesional y prepara el envío al donante con un mensaje de gratitud cristiana.
-          </p>
-          <div class="hero-actions" aria-label="Acciones principales">
-            <button class="btn btn-primary" id="focusFormBtn" type="button">Crear recibo</button>
-            <button class="btn btn-accent" id="printHeroBtn" type="button">Convertir a PDF</button>
-          </div>
-
-          <div class="trust-grid" aria-label="Características principales">
-            <article class="trust-card">
-              <strong>PDF inmediato</strong>
-              <span>Usa imprimir/guardar como PDF desde el navegador.</span>
-            </article>
-            <article class="trust-card">
-              <strong>Envío al donante</strong>
-              <span>Abre un correo prellenado con datos del recibo.</span>
-            </article>
-            <article class="trust-card">
-              <strong>Sin servidores</strong>
-              <span>Los datos se guardan en este dispositivo.</span>
-            </article>
-          </div>
-        </div>
-
-        <aside class="hero-side" aria-label="Resumen espiritual">
-          <div class="receipt-card" style="max-width: 420px;">
-            <div class="thanks">
-              <strong>“Que os améis unos a otros…”</strong>
-              <p>
-                Gracias por sembrar con amor en la obra de Dios.
-                Iglesia Jesús te ama · Juan 13:34.
-              </p>
-            </div>
-          </div>
-        </aside>
-      </section>
-
-      <div class="install-card no-print" id="installCard" role="region" aria-label="Instalar aplicación">
-        <div>
-          <strong>Instala esta app</strong>
-          <p style="color: var(--muted); margin-top:.2rem;">Accede más rápido desde tu dispositivo.</p>
-        </div>
-        <button class="btn btn-primary btn-small" id="installBtn" type="button">Instalar</button>
-      </div>
-
-      <div class="main-grid">
-        <section class="panel no-print" aria-labelledby="formTitle">
-          <div class="panel-header">
-            <div>
-              <h2 id="formTitle">Nuevo recibo</h2>
-              <p>Completa los datos mínimos. La vista previa se actualiza al instante.</p>
-            </div>
-          </div>
-
-          <div class="panel-body">
-            <div class="steps" aria-label="Progreso de creación">
-              <div class="step" id="stepDonor" aria-current="step">
-                <span class="step-number">1</span>
-                <span>Donante</span>
-              </div>
-              <div class="step" id="stepGift">
-                <span class="step-number">2</span>
-                <span>Contribución</span>
-              </div>
-              <div class="step" id="stepSend">
-                <span class="step-number">3</span>
-                <span>Enviar</span>
-              </div>
-            </div>
-
-            <form id="receiptForm" novalidate>
-              <fieldset>
-                <legend>Datos del donante</legend>
-                <div class="form-grid two">
-                  <div class="field" data-field="donorName">
-                    <label for="donorName">Nombre del donante *</label>
-                    <input id="donorName" name="donorName" type="text" autocomplete="name" required placeholder="Ej. María González">
-                    <span class="error-text" id="donorNameError" aria-live="polite"></span>
-                  </div>
-
-                  <div class="field" data-field="donorEmail">
-                    <label for="donorEmail">Correo del donante *</label>
-                    <input id="donorEmail" name="donorEmail" type="email" autocomplete="email" required placeholder="donante@correo.com">
-                    <span class="error-text" id="donorEmailError" aria-live="polite"></span>
-                  </div>
-                </div>
-
-                <div class="form-grid two" style="margin-top:1rem;">
-                  <div class="field" data-field="donorPhone">
-                    <label for="donorPhone">Teléfono</label>
-                    <input id="donorPhone" name="donorPhone" type="tel" autocomplete="tel" placeholder="+34 600 000 000">
-                    <span class="error-text" id="donorPhoneError" aria-live="polite"></span>
-                  </div>
-
-                  <div class="field" data-field="donorAddress">
-                    <label for="donorAddress">Dirección</label>
-                    <input id="donorAddress" name="donorAddress" type="text" autocomplete="street-address" placeholder="Opcional">
-                    <span class="error-text" id="donorAddressError" aria-live="polite"></span>
-                  </div>
-                </div>
-              </fieldset>
-
-              <div class="divider" role="separator"></div>
-
-              <fieldset>
-                <legend>Contribución</legend>
-
-                <div class="form-grid three">
-                  <div class="field" data-field="amount">
-                    <label for="amount">Importe *</label>
-                    <input id="amount" name="amount" type="number" min="0.01" step="0.01" inputmode="decimal" required placeholder="100.00">
-                    <span class="error-text" id="amountError" aria-live="polite"></span>
-                  </div>
-
-                  <div class="field" data-field="currency">
-                    <label for="currency">Moneda</label>
-                    <select id="currency" name="currency">
-                      <option value="EUR">EUR · Euro</option>
-                      <option value="USD">USD · Dólar</option>
-                      <option value="GBP">GBP · Libra</option>
-                      <option value="MXN">MXN · Peso mexicano</option>
-                      <option value="COP">COP · Peso colombiano</option>
-                      <option value="ARS">ARS · Peso argentino</option>
-                      <option value="CLP">CLP · Peso chileno</option>
-                      <option value="PEN">PEN · Sol peruano</option>
-                    </select>
-                    <span class="error-text" id="currencyError" aria-live="polite"></span>
-                  </div>
-
-                  <div class="field" data-field="date">
-                    <label for="date">Fecha *</label>
-                    <input id="date" name="date" type="date" required>
-                    <span class="error-text" id="dateError" aria-live="polite"></span>
-                  </div>
-                </div>
-
-                <div style="margin-top:1rem;">
-                  <p class="radio-group-label" id="paymentLabel">Medio de contribución *</p>
-                  <div class="radio-cards" role="radiogroup" aria-labelledby="paymentLabel">
-                    <label class="radio-card">
-                      <input type="radio" name="paymentMethod" value="Efectivo" checked>
-                      <span>
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                          <path d="M3 7h18v10H3V7Z" stroke="currentColor" stroke-width="2" />
-                          <path d="M8 12h.01M16 12h.01M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                        <strong>Efectivo</strong>
-                      </span>
-                    </label>
-
-                    <label class="radio-card">
-                      <input type="radio" name="paymentMethod" value="Transferencia bancaria">
-                      <span>
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                          <path d="M4 10h16M6 10v8M10 10v8M14 10v8M18 10v8M3 20h18M12 3l8 5H4l8-5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                        </svg>
-                        <strong>Transferencia</strong>
-                      </span>
-                    </label>
-
-                    <label class="radio-card">
-                      <input type="radio" name="paymentMethod" value="Otro medio">
-                      <span>
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                          <path d="M4 7h16v10H4V7Z" stroke="currentColor" stroke-width="2" />
-                          <path d="M4 10h16M8 15h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                        <strong>Otro medio</strong>
-                      </span>
-                    </label>
-                  </div>
-                </div>
-
-                <div class="form-grid two" style="margin-top:1rem;">
-                  <div class="field" data-field="category">
-                    <label for="category">Tipo de contribución</label>
-                    <select id="category" name="category">
-                      <option value="Contribución general">Contribución general</option>
-                      <option value="Diezmo">Diezmo</option>
-                      <option value="Ofrenda">Ofrenda</option>
-                      <option value="Misiones">Misiones</option>
-                      <option value="Ayuda social">Ayuda social</option>
-                      <option value="Construcción / mantenimiento">Construcción / mantenimiento</option>
-                      <option value="Otro propósito">Otro propósito</option>
-                    </select>
-                    <span class="error-text" id="categoryError" aria-live="polite"></span>
-                  </div>
-
-                  <div class="field" data-field="reference">
-                    <label for="reference">Referencia / comprobante</label>
-                    <input id="reference" name="reference" type="text" placeholder="Ej. transferencia #1234">
-                    <span class="error-text" id="referenceError" aria-live="polite"></span>
-                  </div>
-                </div>
-
-                <div class="field" data-field="notes" style="margin-top:1rem;">
-                  <label for="notes">Notas internas o descripción</label>
-                  <textarea id="notes" name="notes" placeholder="Ej. Ofrenda especial de domingo."></textarea>
-                  <span class="hint">Estas notas aparecen en el recibo si se completan.</span>
-                  <span class="error-text" id="notesError" aria-live="polite"></span>
-                </div>
-              </fieldset>
-
-              <div class="divider" role="separator"></div>
-
-              <fieldset>
-                <legend>Datos de la iglesia</legend>
-                <div class="form-grid two">
-                  <div class="field" data-field="churchName">
-                    <label for="churchName">Nombre de la iglesia *</label>
-                    <input id="churchName" name="churchName" type="text" required value="Iglesia Jesús te ama">
-                    <span class="error-text" id="churchNameError" aria-live="polite"></span>
-                  </div>
-
-                  <div class="field" data-field="issuer">
-                    <label for="issuer">Emitido por</label>
-                    <input id="issuer" name="issuer" type="text" placeholder="Nombre del responsable">
-                    <span class="error-text" id="issuerError" aria-live="polite"></span>
-                  </div>
-                </div>
-
-                <div class="field" data-field="churchAddress" style="margin-top:1rem;">
-                  <label for="churchAddress">Dirección o datos fiscales de la iglesia</label>
-                  <textarea id="churchAddress" name="churchAddress" placeholder="Dirección, CIF/NIF/RUC, teléfono o datos administrativos."></textarea>
-                  <span class="error-text" id="churchAddressError" aria-live="polite"></span>
-                </div>
-              </fieldset>
-
-              <div class="toolbar">
-                <button class="btn btn-primary" type="submit">Guardar recibo</button>
-                <button class="btn btn-accent" type="button" id="printBtn">Convertir a PDF</button>
-                <button class="btn btn-ghost" type="button" id="emailBtn">Enviar al donante</button>
-                <button class="btn btn-ghost" type="button" id="resetBtn">Limpiar</button>
-              </div>
-            </form>
-          </div>
-        </section>
-
-        <aside class="preview-column" aria-labelledby="previewTitle">
-          <section class="panel" id="printArea">
-            <div class="panel-header no-print">
-              <div>
-                <h2 id="previewTitle">Vista previa</h2>
-                <p>Este diseño se imprimirá o guardará como PDF.</p>
-              </div>
-            </div>
-
-            <div class="panel-body">
-              <article class="receipt-card" aria-label="Recibo de contribución">
-                <header class="receipt-top">
-                  <div class="church-seal">
-                    <div class="seal-icon" aria-hidden="true">
-                      <svg viewBox="0 0 64 64" fill="none" focusable="false">
-                        <path d="M32 54s22-12.6 22-31.1C54 13.9 47.6 8 40.3 8c-4.3 0-7.1 2.1-8.3 4-1.2-1.9-4-4-8.3-4C16.4 8 10 13.9 10 22.9 10 41.4 32 54 32 54Z" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/>
-                        <path d="M32 18v22M22 28h20" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
-                      </svg>
-                    </div>
-                    <div>
-                      <strong id="rChurchName">Iglesia Jesús te ama</strong>
-                      <small>Juan 13:34</small>
-                    </div>
-                  </div>
-                  <div class="receipt-number">
-                    <span>Recibo</span>
-                    <strong id="rNumber">R-000001</strong>
-                  </div>
-                </header>
-
-                <section class="receipt-title" aria-labelledby="receiptHeading">
-                  <h2 id="receiptHeading">Recibo de contribución</h2>
-                  <p>Documento de constancia para el donante.</p>
-                </section>
-
-                <section class="amount-box" aria-label="Importe recibido">
-                  <span>Importe recibido</span>
-                  <strong id="rAmount">€0,00</strong>
-                </section>
-
-                <section class="receipt-details two" aria-label="Detalles del recibo">
-                  <div>
-                    <div class="detail-row">
-                      <span>Donante</span>
-                      <span id="rDonorName">Nombre del donante</span>
-                    </div>
-                    <div class="detail-row">
-                      <span>Correo</span>
-                      <span id="rDonorEmail">donante@correo.com</span>
-                    </div>
-                    <div class="detail-row">
-                      <span>Fecha</span>
-                      <span id="rDate">—</span>
-                    </div>
-                    <div class="detail-row">
-                      <span>Método</span>
-                      <span id="rPayment">Efectivo</span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div class="detail-row">
-                      <span>Concepto</span>
-                      <span id="rCategory">Contribución general</span>
-                    </div>
-                    <div class="detail-row">
-                      <span>Referencia</span>
-                      <span id="rReference">—</span>
-                    </div>
-                    <div class="detail-row">
-                      <span>Teléfono</span>
-                      <span id="rPhone">—</span>
-                    </div>
-                    <div class="detail-row">
-                      <span>Emitido por</span>
-                      <span id="rIssuer">—</span>
-                    </div>
-                  </div>
-                </section>
-
-                <section class="detail-row" aria-label="Notas">
-                  <span>Notas</span>
-                  <span id="rNotes">—</span>
-                </section>
-
-                <section class="thanks" aria-label="Agradecimiento">
-                  <strong>Gracias de parte de la iglesia Jesús te ama.</strong>
-                  <p>
-                    “Un mandamiento nuevo os doy: Que os améis unos a otros;
-                    como yo os he amado, que también os améis unos a otros.”
-                    Juan 13:34.
-                  </p>
-                </section>
-
-                <footer class="receipt-footer">
-                  <p id="rChurchAddress">Este recibo fue generado para constancia de la contribución recibida.</p>
-                  <div class="signature-line" id="rSignature">Firma autorizada</div>
-                  <p>
-                    Nota: verifica los requisitos fiscales aplicables en tu país o región antes de usar este documento
-                    como comprobante tributario oficial.
-                  </p>
-                </footer>
-              </article>
-            </div>
-          </section>
-        </aside>
-      </div>
-
-      <section class="panel no-print" aria-labelledby="libraryTitle" style="margin-top: var(--space-5);">
-        <div class="panel-header">
-          <div>
-            <h2 id="libraryTitle">Recibos guardados</h2>
-            <p>Busca, reimprime, envía o exporta tus registros locales.</p>
-          </div>
-        </div>
-
-        <div class="panel-body">
-          <div class="library-tools">
-            <div class="stats-grid" aria-label="Resumen de recibos">
-              <div class="stat">
-                <strong id="statCount">0</strong>
-                <span>Recibos</span>
-              </div>
-              <div class="stat">
-                <strong id="statTotal">€0,00</strong>
-                <span>Total</span>
-              </div>
-              <div class="stat">
-                <strong id="statCash">€0,00</strong>
-                <span>Efectivo</span>
-              </div>
-              <div class="stat">
-                <strong id="statOther">€0,00</strong>
-                <span>Otros medios</span>
-              </div>
-            </div>
-
-            <div class="search-row">
-              <div class="field">
-                <label for="searchInput">Buscar recibos</label>
-                <input id="searchInput" type="search" placeholder="Nombre, correo, recibo, método, referencia...">
-              </div>
-              <div class="toolbar">
-                <button class="btn btn-ghost btn-small" id="exportBtn" type="button">Exportar CSV</button>
-                <button class="btn btn-danger btn-small" id="clearAllBtn" type="button">Borrar todo</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="table-wrap" id="tableWrap" hidden>
-            <table aria-describedby="libraryTitle">
-              <thead>
-                <tr>
-                  <th scope="col">Recibo</th>
-                  <th scope="col">Fecha</th>
-                  <th scope="col">Donante</th>
-                  <th scope="col">Importe</th>
-                  <th scope="col">Método</th>
-                  <th scope="col">Acciones</th>
-                </tr>
-              </thead>
-              <tbody id="receiptsTbody"></tbody>
-            </table>
-          </div>
-
-          <div class="empty-state" id="emptyState">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M6 2h9l3 3v17H6V2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-              <path d="M14 2v4h4M8.5 11h7M8.5 15h7M8.5 19h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            <div>
-              <h3>Aún no hay recibos guardados</h3>
-              <p>Cuando guardes el primer recibo, aparecerá aquí.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="footer no-print">
-      <p>
-        Aplicación local para la iglesia Jesús te ama. La información se guarda en este navegador.
-      </p>
-    </footer>
-  </div>
-
-  <div class="modal-backdrop no-print" id="helpModal" role="presentation" aria-hidden="true">
-    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle" aria-describedby="helpDesc">
-      <header class="modal-header">
-        <div>
-          <h2 id="helpTitle">Cómo usar la aplicación</h2>
-          <p id="helpDesc" style="color: var(--muted); margin-top:.35rem;">
-            Flujo recomendado para generar y enviar recibos.
-          </p>
-        </div>
-        <button class="icon-btn" id="closeHelpBtn" type="button" aria-label="Cerrar ayuda">×</button>
-      </header>
-
-      <div class="modal-body">
-        <article style="display:grid; gap:1rem;">
-          <section>
-            <h3>1. Completa el recibo</h3>
-            <p style="color:var(--muted); margin-top:.35rem;">
-              Escribe los datos del donante, importe, fecha, método de contribución y cualquier referencia.
-            </p>
-          </section>
-
-          <section>
-            <h3>2. Guarda y convierte a PDF</h3>
-            <p style="color:var(--muted); margin-top:.35rem;">
-              Usa “Convertir a PDF”. En la ventana de impresión del navegador, elige “Guardar como PDF”.
-            </p>
-          </section>
-
-          <section>
-            <h3>3. Envía al donante</h3>
-            <p style="color:var(--muted); margin-top:.35rem;">
-              El botón “Enviar al donante” abre tu programa de correo con un mensaje prellenado.
-              Por seguridad, los navegadores no permiten adjuntar automáticamente el PDF desde una página local;
-              adjúntalo manualmente después de guardarlo.
-            </p>
-          </section>
-
-          <section>
-            <h3>Privacidad</h3>
-            <p style="color:var(--muted); margin-top:.35rem;">
-              No se envía información a servidores. Los recibos quedan guardados en el almacenamiento local
-              del navegador que estás usando.
-            </p>
-          </section>
-        </article>
-      </div>
-
-      <footer class="modal-footer">
-        <button class="btn btn-primary" id="understoodBtn" type="button">Entendido</button>
-      </footer>
-    </section>
-  </div>
-
-  <div class="toast-region no-print" id="toastRegion" aria-live="polite" aria-label="Notificaciones"></div>
-
-  <script>
-    (() => {
-      "use strict";
-
-      const STORAGE_KEY = "jesusTeAma.receipts.v1";
-      const THEME_KEY = "jesusTeAma.theme.v1";
-      const SETTINGS_KEY = "jesusTeAma.settings.v1";
-
-      const $ = (selector, root = document) => root.querySelector(selector);
-      const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-
-      const state = {
-        receipts: [],
-        activeReceipt: null,
-        deferredInstallPrompt: null,
-        lastFocusedElement: null
-      };
-
-      const icons = {
-        moon: "☾",
-        sun: "☀"
-      };
-
-      const todayISO = () => {
-        const now = new Date();
-        const offset = now.getTimezoneOffset();
-        const local = new Date(now.getTime() - offset * 60 * 1000);
-        return local.toISOString().slice(0, 10);
-      };
-
-      const safeText = value => String(value ?? "").trim();
-
-      const uid = () => {
-        const next = Number(localStorage.getItem("jesusTeAma.nextNumber") || "1");
-        localStorage.setItem("jesusTeAma.nextNumber", String(next + 1));
-        return `R-${String(next).padStart(6, "0")}`;
-      };
-
-      const formatDate = iso => {
-        if (!iso) return "—";
-        const [year, month, day] = iso.split("-").map(Number);
-        const date = new Date(year, month - 1, day);
-        return new Intl.DateTimeFormat("es", {
-          year: "numeric",
-          month: "long",
-          day: "numeric"
-        }).format(date);
-      };
-
-      const formatMoney = (amount, currency = "EUR") => {
-        const value = Number(amount || 0);
-        try {
-          return new Intl.NumberFormat("es", {
-            style: "currency",
-            currency,
-            minimumFractionDigits: 2
-          }).format(value);
-        } catch {
-          return `${value.toFixed(2)} ${currency}`;
-        }
-      };
-
-      const normalize = text => safeText(text).toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
-
-      const readStorage = () => {
-        try {
-          const raw = localStorage.getItem(STORAGE_KEY);
-          state.receipts = raw ? JSON.parse(raw) : [];
-        } catch {
-          state.receipts = [];
-          toast("No se pudieron leer los datos guardados", "Se inició una biblioteca vacía.", "warning");
-        }
-      };
-
-      const writeStorage = () => {
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state.receipts));
-        } catch {
-          toast("No se pudo guardar", "El almacenamiento local está lleno o bloqueado.", "danger");
-        }
-      };
-
-      const getFormData = () => {
-        const form = $("#receiptForm");
-        const data = Object.fromEntries(new FormData(form).entries());
-        const payment = $("input[name='paymentMethod']:checked")?.value || "Efectivo";
-
-        return {
-          donorName: safeText(data.donorName),
-          donorEmail: safeText(data.donorEmail),
-          donorPhone: safeText(data.donorPhone),
-          donorAddress: safeText(data.donorAddress),
-          amount: Number(data.amount || 0),
-          currency: data.currency || "EUR",
-          date: data.date || todayISO(),
-          paymentMethod: payment,
-          category: data.category || "Contribución general",
-          reference: safeText(data.reference),
-          notes: safeText(data.notes),
-          churchName: safeText(data.churchName) || "Iglesia Jesús te ama",
-          churchAddress: safeText(data.churchAddress),
-          issuer: safeText(data.issuer)
-        };
-      };
-
-      const validate = () => {
-        const data = getFormData();
-        const errors = {};
-
-        if (!data.donorName) errors.donorName = "Escribe el nombre del donante.";
-        if (!data.donorEmail) {
-          errors.donorEmail = "Escribe el correo del donante.";
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.donorEmail)) {
-          errors.donorEmail = "Escribe un correo válido.";
-        }
-
-        if (!data.amount || data.amount <= 0) errors.amount = "El importe debe ser mayor que 0.";
-        if (!data.date) errors.date = "Selecciona la fecha.";
-        if (!data.churchName) errors.churchName = "Escribe el nombre de la iglesia.";
-
-        $$(".field").forEach(field => {
-          const key = field.dataset.field;
-          const error = errors[key] || "";
-          field.classList.toggle("invalid", Boolean(error));
-          const errorEl = $(`#${key}Error`);
-          if (errorEl) errorEl.textContent = error;
-        });
-
-        updateSteps(data, errors);
-        return { valid: Object.keys(errors).length === 0, data, errors };
-      };
-
-      const updateSteps = (data, errors = {}) => {
-        const donorDone = data.donorName && data.donorEmail && !errors.donorEmail;
-        const giftDone = data.amount > 0 && data.date;
-        const sendDone = donorDone && giftDone;
-
-        $("#stepDonor").setAttribute("aria-current", donorDone ? "false" : "step");
-        $("#stepGift").setAttribute("aria-current", donorDone && !giftDone ? "step" : "false");
-        $("#stepSend").setAttribute("aria-current", sendDone ? "step" : "false");
-      };
-
-      const setReceiptPreview = receipt => {
-        const r = receipt || getFormData();
-        const number = r.receiptNumber || state.activeReceipt?.receiptNumber || "R-000001";
-
-        $("#rChurchName").textContent = r.churchName || "Iglesia Jesús te ama";
-        $("#rNumber").textContent = number;
-        $("#rAmount").textContent = formatMoney(r.amount, r.currency);
-        $("#rDonorName").textContent = r.donorName || "Nombre del donante";
-        $("#rDonorEmail").textContent = r.donorEmail || "donante@correo.com";
-        $("#rDate").textContent = formatDate(r.date);
-        $("#rPayment").textContent = r.paymentMethod || "Efectivo";
-        $("#rCategory").textContent = r.category || "Contribución general";
-        $("#rReference").textContent = r.reference || "—";
-        $("#rPhone").textContent = r.donorPhone || "—";
-        $("#rIssuer").textContent = r.issuer || "—";
-        $("#rNotes").textContent = r.notes || "—";
-        $("#rChurchAddress").textContent = r.churchAddress || "Este recibo fue generado para constancia de la contribución recibida.";
-        $("#rSignature").textContent = r.issuer ? `${r.issuer} · Firma autorizada` : "Firma autorizada";
-      };
-
-      const buildReceipt = data => ({
-        id: crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`,
-        receiptNumber: uid(),
-        createdAt: new Date().toISOString(),
-        ...data
-      });
-
-      const saveReceipt = event => {
-        event.preventDefault();
-        const { valid, data } = validate();
-
-        if (!valid) {
-          toast("Faltan datos importantes", "Revisa los campos marcados antes de guardar.", "warning");
-          const firstInvalid = $(".field.invalid input, .field.invalid select, .field.invalid textarea");
-          firstInvalid?.focus();
-          return;
-        }
-
-        const receipt = buildReceipt(data);
-        state.receipts.unshift(receipt);
-        state.activeReceipt = receipt;
-        writeStorage();
-        setReceiptPreview(receipt);
-        renderLibrary();
-        toast("Recibo guardado", `${receipt.receiptNumber} quedó registrado correctamente.`, "success");
-      };
-
-      const makeEmailBody = receipt => {
-        const r = receipt || getFormData();
-        return [
-          `Estimado/a ${r.donorName || "donante"},`,
-          "",
-          `Dios le bendiga. Gracias de parte de la iglesia ${r.churchName || "Jesús te ama"} por su contribución.`,
-          "",
-          `Detalle del recibo:`,
-          `Recibo: ${r.receiptNumber || $("#rNumber").textContent}`,
-          `Fecha: ${formatDate(r.date)}`,
-          `Importe: ${formatMoney(r.amount, r.currency)}`,
-          `Método: ${r.paymentMethod}`,
-          `Concepto: ${r.category}`,
-          r.reference ? `Referencia: ${r.reference}` : "",
-          "",
-          `“Un mandamiento nuevo os doy: Que os améis unos a otros; como yo os he amado, que también os améis unos a otros.” Juan 13:34.`,
-          "",
-          "Adjuntamos o compartimos el recibo correspondiente para su constancia.",
-          "",
-          "Con gratitud,",
-          `${r.churchName || "Iglesia Jesús te ama"}`
-        ].filter(Boolean).join("\n");
-      };
-
-      const emailReceipt = receipt = null => {
-        const current = receipt || state.activeReceipt || getFormData();
-        const validation = receipt ? { valid: true } : validate();
-
-        if (!validation.valid) {
-          toast("No se puede preparar el correo", "Completa nombre, correo, importe y fecha.", "warning");
-          return;
-        }
-
-        const subject = encodeURIComponent(`Recibo de contribución ${current.receiptNumber || $("#rNumber").textContent}`);
-        const body = encodeURIComponent(makeEmailBody(current));
-        const to = encodeURIComponent(current.donorEmail || "");
-        window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
-
-        toast(
-          "Correo preparado",
-          "Adjunta manualmente el PDF guardado antes de enviarlo.",
-          "success"
-        );
-      };
-
-      const printReceipt = () => {
-        const { valid } = validate();
-        if (!valid && !state.activeReceipt) {
-          toast("Completa el recibo antes de imprimir", "Necesitas nombre, correo, importe y fecha.", "warning");
-          return;
-        }
-        setReceiptPreview(state.activeReceipt || getFormData());
-        requestAnimationFrame(() => window.print());
-      };
-
-      const resetForm = () => {
-        $("#receiptForm").reset();
-        $("#date").value = todayISO();
-        $("#churchName").value = "Iglesia Jesús te ama";
-        state.activeReceipt = null;
-        $$(".field").forEach(field => field.classList.remove("invalid"));
-        $$(".error-text").forEach(el => el.textContent = "");
-        setReceiptPreview(getFormData());
-        updateSteps(getFormData(), {});
-        toast("Formulario limpio", "Puedes crear un nuevo recibo.", "success");
-        $("#donorName").focus();
-      };
-
-      const renderLibrary = () => {
-        const q = normalize($("#searchInput").value);
-        const rows = q
-          ? state.receipts.filter(receipt => normalize([
-              receipt.receiptNumber,
-              receipt.donorName,
-              receipt.donorEmail,
-              receipt.paymentMethod,
-              receipt.reference,
-              receipt.category
-            ].join(" ")).includes(q))
-          : state.receipts;
-
-        $("#tableWrap").hidden = rows.length === 0;
-        $("#emptyState").hidden = rows.length !== 0;
-
-        $("#receiptsTbody").innerHTML = rows.map(receipt => `
-          <tr>
-            <td><strong>${escapeHtml(receipt.receiptNumber)}</strong></td>
-            <td>${escapeHtml(formatDate(receipt.date))}</td>
-            <td>
-              <strong>${escapeHtml(receipt.donorName)}</strong><br>
-              <span style="color:var(--muted); font-size:.88rem;">${escapeHtml(receipt.donorEmail)}</span>
-            </td>
-            <td><strong>${escapeHtml(formatMoney(receipt.amount, receipt.currency))}</strong></td>
-            <td><span class="pill">${escapeHtml(receipt.paymentMethod)}</span></td>
-            <td>
-              <div class="toolbar" aria-label="Acciones para ${escapeHtml(receipt.receiptNumber)}">
-                <button class="btn btn-ghost btn-small" data-action="load" data-id="${receipt.id}" type="button">Ver</button>
-                <button class="btn btn-ghost btn-small" data-action="email" data-id="${receipt.id}" type="button">Enviar</button>
-                <button class="btn btn-ghost btn-small" data-action="print" data-id="${receipt.id}" type="button">PDF</button>
-                <button class="btn btn-danger btn-small" data-action="delete" data-id="${receipt.id}" type="button">Borrar</button>
-              </div>
-            </td>
-          </tr>
-        `).join("");
-
-        renderStats();
-      };
-
-      const renderStats = () => {
-        const total = state.receipts.reduce((sum, r) => sum + Number(r.amount || 0), 0);
-        const cash = state.receipts
-          .filter(r => r.paymentMethod === "Efectivo")
-          .reduce((sum, r) => sum + Number(r.amount || 0), 0);
-        const other = total - cash;
-        const currency = state.receipts[0]?.currency || $("#currency").value || "EUR";
-
-        $("#statCount").textContent = String(state.receipts.length);
-        $("#statTotal").textContent = formatMoney(total, currency);
-        $("#statCash").textContent = formatMoney(cash, currency);
-        $("#statOther").textContent = formatMoney(other, currency);
-      };
-
-      const escapeHtml = value => String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-
-      const loadReceiptIntoForm = receipt => {
-        const form = $("#receiptForm");
-        Object.entries(receipt).forEach(([key, value]) => {
-          const field = form.elements[key];
-          if (field && field.type !== "radio") field.value = value ?? "";
-        });
-
-        const radio = $(`input[name="paymentMethod"][value="${CSS.escape(receipt.paymentMethod)}"]`);
-        if (radio) radio.checked = true;
-
-        state.activeReceipt = receipt;
-        setReceiptPreview(receipt);
-        validate();
-        toast("Recibo cargado", `${receipt.receiptNumber} está listo para revisar.`, "success");
-        $("#previewTitle").scrollIntoView({ behavior: "smooth", block: "start" });
-      };
-
-      const deleteReceipt = id => {
-        const receipt = state.receipts.find(item => item.id === id);
-        if (!receipt) return;
-        const ok = confirm(`¿Borrar el recibo ${receipt.receiptNumber}? Esta acción no se puede deshacer.`);
-        if (!ok) return;
-
-        state.receipts = state.receipts.filter(item => item.id !== id);
-        if (state.activeReceipt?.id === id) state.activeReceipt = null;
-        writeStorage();
-        renderLibrary();
-        toast("Recibo borrado", `${receipt.receiptNumber} fue eliminado.`, "success");
-      };
-
-      const exportCSV = () => {
-        if (!state.receipts.length) {
-          toast("No hay datos para exportar", "Guarda al menos un recibo primero.", "warning");
-          return;
-        }
-
-        const headers = [
-          "Recibo", "Fecha", "Donante", "Correo", "Teléfono", "Importe", "Moneda",
-          "Método", "Concepto", "Referencia", "Notas", "Iglesia", "Emitido por", "Creado"
-        ];
-
-        const lines = state.receipts.map(r => [
-          r.receiptNumber,
-          r.date,
-          r.donorName,
-          r.donorEmail,
-          r.donorPhone,
-          r.amount,
-          r.currency,
-          r.paymentMethod,
-          r.category,
-          r.reference,
-          r.notes,
-          r.churchName,
-          r.issuer,
-          r.createdAt
-        ].map(csvCell).join(","));
-
-        const csv = [headers.join(","), ...lines].join("\n");
-        const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `recibos-jesus-te-ama-${todayISO()}.csv`;
-        document.body.append(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
-        toast("CSV exportado", "Se descargó el archivo de recibos.", "success");
-      };
-
-      const csvCell = value => {
-        const text = String(value ?? "");
-        return `"${text.replaceAll('"', '""')}"`;
-      };
-
-      const clearAll = () => {
-        if (!state.receipts.length) {
-          toast("No hay recibos", "La biblioteca ya está vacía.", "warning");
-          return;
-        }
-
-        const ok = confirm("¿Borrar todos los recibos guardados en este navegador?");
-        if (!ok) return;
-
-        state.receipts = [];
-        state.activeReceipt = null;
-        writeStorage();
-        renderLibrary();
-        toast("Biblioteca vacía", "Todos los recibos locales fueron eliminados.", "success");
-      };
-
-      const toast = (title, message, type = "success") => {
-        const region = $("#toastRegion");
-        const el = document.createElement("div");
-        el.className = `toast ${type}`;
-        el.setAttribute("role", "status");
-        el.innerHTML = `<strong>${escapeHtml(title)}</strong><span>${escapeHtml(message)}</span>`;
-        region.append(el);
-
-        window.setTimeout(() => {
-          el.style.opacity = "0";
-          el.style.transform = "translateY(10px)";
-          el.addEventListener("transitionend", () => el.remove(), { once: true });
-        }, 4200);
-      };
-
-      const openModal = modal => {
-        state.lastFocusedElement = document.activeElement;
-        modal.classList.add("active");
-        modal.setAttribute("aria-hidden", "false");
-        document.body.classList.add("modal-open");
-
-        const first = getFocusable(modal)[0];
-        first?.focus();
-      };
-
-      const closeModal = modal => {
-        modal.classList.remove("active");
-        modal.setAttribute("aria-hidden", "true");
-        document.body.classList.remove("modal-open");
-        state.lastFocusedElement?.focus?.();
-      };
-
-      const getFocusable = root => $$(
-        'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
-        root
-      ).filter(el => !el.hasAttribute("hidden") && el.offsetParent !== null);
-
-      const trapFocus = event => {
-        const modal = $(".modal-backdrop.active");
-        if (!modal || event.key !== "Tab") return;
-
-        const focusable = getFocusable(modal);
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-
-        if (event.shiftKey && document.activeElement === first) {
-          event.preventDefault();
-          last.focus();
-        } else if (!event.shiftKey && document.activeElement === last) {
-          event.preventDefault();
-          first.focus();
-        }
-      };
-
-      const applyTheme = theme => {
-        document.documentElement.dataset.theme = theme;
-        localStorage.setItem(THEME_KEY, theme);
-        $("#themeIcon").textContent = theme === "dark" ? icons.sun : icons.moon;
-      };
-
-      const initTheme = () => {
-        const saved = localStorage.getItem(THEME_KEY);
-        const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        applyTheme(saved || system);
-      };
-
-      const initPWA = () => {
-        const manifest = {
-          name: "Recibos de Contribuciones - Iglesia Jesús te ama",
-          short_name: "Recibos Iglesia",
-          description: "Crea, imprime en PDF y envía recibos de contribuciones.",
-          start_url: ".",
-          display: "standalone",
-          background_color: "#f7f4ee",
-          theme_color: "#12372A",
-          icons: [
-            {
-              src: makeIconDataUrl(192),
-              sizes: "192x192",
-              type: "image/svg+xml",
-              purpose: "any maskable"
-            },
-            {
-              src: makeIconDataUrl(512),
-              sizes: "512x512",
-              type: "image/svg+xml",
-              purpose: "any maskable"
-            }
-          ]
-        };
-
-        const manifestBlob = new Blob([JSON.stringify(manifest)], { type: "application/manifest+json" });
-        const manifestUrl = URL.createObjectURL(manifestBlob);
-        const link = document.createElement("link");
-        link.rel = "manifest";
-        link.href = manifestUrl;
-        document.head.append(link);
-
-        if ("serviceWorker" in navigator && location.protocol !== "file:") {
-          const swCode = `
-            const CACHE = "jesus-te-ama-receipts-v1";
-            self.addEventListener("install", event => {
-              event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(["./"])));
-              self.skipWaiting();
-            });
-            self.addEventListener("activate", event => {
-              event.waitUntil(self.clients.claim());
-            });
-            self.addEventListener("fetch", event => {
-              event.respondWith(fetch(event.request).catch(() => caches.match(event.request)));
-            });
-          `;
-          const swBlob = new Blob([swCode], { type: "text/javascript" });
-          const swUrl = URL.createObjectURL(swBlob);
-          navigator.serviceWorker.register(swUrl).catch(() => {});
-        }
-
-        window.addEventListener("beforeinstallprompt", event => {
-          event.preventDefault();
-          state.deferredInstallPrompt = event;
-          $("#installCard").classList.add("show");
-        });
-      };
-
-      const makeIconDataUrl = size => {
-        const svg = `
-          <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 512 512">
-            <rect width="512" height="512" rx="112" fill="#12372A"/>
-            <circle cx="378" cy="124" r="94" fill="#D39B42" opacity=".72"/>
-            <path d="M256 390s144-80 144-204c0-58-42-98-90-98-30 0-47 15-54 28-7-13-24-28-54-28-48 0-90 40-90 98 0 124 144 204 144 204Z" fill="none" stroke="#FFFAF1" stroke-width="34" stroke-linejoin="round"/>
-            <path d="M256 150v142M210 214h92" stroke="#FFFAF1" stroke-width="34" stroke-linecap="round"/>
-          </svg>
-        `.trim();
-        return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
-      };
-
-      const bindEvents = () => {
-        $("#receiptForm").addEventListener("submit", saveReceipt);
-        $("#receiptForm").addEventListener("input", () => {
-          setReceiptPreview(getFormData());
-          validate();
-        });
-        $("#receiptForm").addEventListener("change", () => {
-          setReceiptPreview(getFormData());
-          validate();
-        });
-
-        $("#printBtn").addEventListener("click", printReceipt);
-        $("#printHeroBtn").addEventListener("click", printReceipt);
-        $("#emailBtn").addEventListener("click", () => emailReceipt());
-        $("#resetBtn").addEventListener("click", resetForm);
-        $("#focusFormBtn").addEventListener("click", () => $("#donorName").focus());
-
-        $("#searchInput").addEventListener("input", renderLibrary);
-        $("#exportBtn").addEventListener("click", exportCSV);
-        $("#clearAllBtn").addEventListener("click", clearAll);
-
-        $("#receiptsTbody").addEventListener("click", event => {
-          const button = event.target.closest("button[data-action]");
-          if (!button) return;
-
-          const receipt = state.receipts.find(item => item.id === button.dataset.id);
-          if (!receipt) return;
-
-          const action = button.dataset.action;
-          if (action === "load") loadReceiptIntoForm(receipt);
-          if (action === "email") emailReceipt(receipt);
-          if (action === "print") {
-            state.activeReceipt = receipt;
-            setReceiptPreview(receipt);
-            requestAnimationFrame(() => window.print());
-          }
-          if (action === "delete") deleteReceipt(receipt.id);
-        });
-
-        $("#themeToggle").addEventListener("click", () => {
-          const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-          applyTheme(next);
-        });
-
-        $("#openHelpBtn").addEventListener("click", () => openModal($("#helpModal")));
-        $("#closeHelpBtn").addEventListener("click", () => closeModal($("#helpModal")));
-        $("#understoodBtn").addEventListener("click", () => closeModal($("#helpModal")));
-        $("#helpModal").addEventListener("click", event => {
-          if (event.target.id === "helpModal") closeModal($("#helpModal"));
-        });
-
-        document.addEventListener("keydown", event => {
-          if (event.key === "Escape") {
-            const modal = $(".modal-backdrop.active");
-            if (modal) closeModal(modal);
-          }
-          trapFocus(event);
-        });
-
-        $("#installBtn").addEventListener("click", async () => {
-          if (!state.deferredInstallPrompt) return;
-          state.deferredInstallPrompt.prompt();
-          await state.deferredInstallPrompt.userChoice.catch(() => null);
-          state.deferredInstallPrompt = null;
-          $("#installCard").classList.remove("show");
-        });
-      };
-
-      const initSettings = () => {
-        try {
-          const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{}");
-          if (!settings.firstRunSeen) {
-            localStorage.setItem(SETTINGS_KEY, JSON.stringify({ firstRunSeen: true }));
-            window.setTimeout(() => {
-              toast(
-                "Listo para crear recibos",
-                "Tus datos se guardan localmente en este dispositivo.",
-                "success"
-              );
-            }, 600);
-          }
-        } catch {}
-      };
-
-      const init = () => {
-        initTheme();
-        initPWA();
-        bindEvents();
-        readStorage();
-        $("#date").value = todayISO();
-        setReceiptPreview(getFormData());
-        renderLibrary();
-        validate();
-        initSettings();
-      };
 
       document.addEventListener("DOMContentLoaded", init);
     })();
