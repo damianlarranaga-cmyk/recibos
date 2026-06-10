@@ -232,6 +232,12 @@
       box-shadow: none;
     }
 
+    .btn-whatsapp {
+      color: white;
+      background: linear-gradient(135deg, #128c7e, #25d366);
+      box-shadow: none;
+    }
+
     .btn-small {
       min-height: 40px;
       min-width: 40px;
@@ -1161,11 +1167,12 @@
         <h1 id="heroTitle">Recibos profesionales, listos para PDF.</h1>
         <p>
           Configura el logo, elige qué datos incluir, omite automáticamente campos vacíos,
-          guarda contribuyentes y genera recibos limpios para impresión o PDF.
+          guarda contribuyentes y genera recibos para imprimir, enviar por correo o compartir por WhatsApp.
         </p>
         <div class="toolbar">
           <button class="btn btn-primary" id="goFormBtn" type="button">Crear recibo</button>
           <button class="btn btn-accent" id="heroPrintBtn" type="button">Convertir a PDF</button>
+          <button class="btn btn-whatsapp" id="heroWhatsappBtn" type="button">WhatsApp</button>
         </div>
       </section>
 
@@ -1259,8 +1266,9 @@
 
                 <div class="form-grid two" style="margin-top:1rem;">
                   <div class="field" data-field="donorPhone">
-                    <label for="donorPhone">Teléfono</label>
+                    <label for="donorPhone">Teléfono / WhatsApp</label>
                     <input id="donorPhone" name="donorPhone" type="tel" autocomplete="tel" placeholder="+34 600 000 000">
+                    <span class="hint">Si se rellena, WhatsApp abrirá directamente el chat de este número.</span>
                     <span class="error" id="donorPhoneError"></span>
                   </div>
 
@@ -1377,7 +1385,8 @@
               <div class="toolbar">
                 <button class="btn btn-primary" type="submit">Guardar recibo</button>
                 <button class="btn btn-accent" id="printBtn" type="button">Convertir a PDF</button>
-                <button class="btn" id="emailBtn" type="button">Enviar al contribuyente</button>
+                <button class="btn" id="emailBtn" type="button">Enviar por correo</button>
+                <button class="btn btn-whatsapp" id="whatsappBtn" type="button">Enviar por WhatsApp</button>
                 <button class="btn" id="resetBtn" type="button">Limpiar</button>
               </div>
             </form>
@@ -1560,6 +1569,14 @@
       </header>
 
       <div class="modal-body">
+        <h3>Enviar por WhatsApp</h3>
+        <p style="color:var(--muted); margin-top:.35rem;">
+          Primero guarda el recibo como PDF usando “Convertir a PDF”. Luego pulsa “Enviar por WhatsApp”.
+          WhatsApp abrirá un mensaje preparado. Adjunta manualmente el PDF guardado antes de enviarlo.
+        </p>
+
+        <br>
+
         <h3>Logo en el PDF</h3>
         <p style="color:var(--muted); margin-top:.35rem;">
           Carga el logo desde “Logo de la iglesia”. La imagen se guarda localmente y aparece en la vista previa y en el PDF.
@@ -1570,13 +1587,6 @@
         <h3>Datos incluidos</h3>
         <p style="color:var(--muted); margin-top:.35rem;">
           Marca o desmarca los datos que quieras incluir. Aunque estén marcados, si un campo está vacío no aparecerá en el PDF.
-        </p>
-
-        <br>
-
-        <h3>Convertir a PDF</h3>
-        <p style="color:var(--muted); margin-top:.35rem;">
-          Pulsa “Convertir a PDF”. En la ventana de impresión, elige “Guardar como PDF”.
         </p>
 
         <br>
@@ -1599,12 +1609,12 @@
     (function () {
       "use strict";
 
-      var RECEIPTS_KEY = "recibos_jesus_te_ama_v5";
-      var CONTRIBUTORS_KEY = "contribuyentes_jesus_te_ama_v2";
-      var NUMBER_KEY = "recibos_jesus_te_ama_next_number_v5";
-      var THEME_KEY = "recibos_jesus_te_ama_theme_v5";
-      var LOGO_KEY = "recibos_jesus_te_ama_logo_v1";
-      var PDF_OPTIONS_KEY = "recibos_jesus_te_ama_pdf_options_v1";
+      var RECEIPTS_KEY = "recibos_jesus_te_ama_v6";
+      var CONTRIBUTORS_KEY = "contribuyentes_jesus_te_ama_v3";
+      var NUMBER_KEY = "recibos_jesus_te_ama_next_number_v6";
+      var THEME_KEY = "recibos_jesus_te_ama_theme_v6";
+      var LOGO_KEY = "recibos_jesus_te_ama_logo_v2";
+      var PDF_OPTIONS_KEY = "recibos_jesus_te_ama_pdf_options_v2";
 
       var receipts = [];
       var contributors = [];
@@ -2128,6 +2138,62 @@
         showToast("Correo preparado", "Adjunta manualmente el PDF antes de enviarlo.");
       }
 
+      function cleanWhatsAppPhone(phone) {
+        var digits = safeText(phone).replace(/\D/g, "");
+
+        if (digits.indexOf("00") === 0) {
+          digits = digits.slice(2);
+        }
+
+        return digits;
+      }
+
+      function makeWhatsAppBody(receipt) {
+        var r = receipt || getFormData();
+        var number = r.receiptNumber || $("#rNumber").textContent;
+
+        return [
+          "Dios le bendiga, " + (r.donorName || "contribuyente") + ".",
+          "",
+          "Gracias de parte de la iglesia " + (r.churchName || "Jesús te ama") + " por su contribución.",
+          "",
+          "Detalle del recibo:",
+          "Recibo: " + number,
+          "Fecha: " + formatDate(r.date),
+          "Importe: " + formatMoney(r.amount, r.currency),
+          r.paymentMethod ? "Método: " + r.paymentMethod : "",
+          r.category ? "Concepto: " + r.category : "",
+          r.reference ? "Referencia: " + r.reference : "",
+          "",
+          "“Un mandamiento nuevo os doy: Que os améis unos a otros; como yo os he amado, que también os améis unos a otros.” Juan 13:34.",
+          "",
+          "Por favor, adjuntamos el PDF del recibo para su constancia."
+        ].filter(Boolean).join("\n");
+      }
+
+      function whatsappReceipt(receipt) {
+        var r = receipt || activeReceipt || getFormData();
+
+        if (!receipt) {
+          var result = validateForm();
+
+          if (!result.valid) {
+            showToast("Faltan datos", "Completa nombre, importe y fecha antes de enviar por WhatsApp.");
+            return;
+          }
+
+          r = result.data;
+        }
+
+        var phone = cleanWhatsAppPhone(r.donorPhone);
+        var text = encodeURIComponent(makeWhatsAppBody(r));
+        var url = phone ? "https://wa.me/" + phone + "?text=" + text : "https://wa.me/?text=" + text;
+
+        window.open(url, "_blank", "noopener,noreferrer");
+
+        showToast("WhatsApp preparado", "Guarda primero el recibo como PDF y adjúntalo manualmente en el chat.");
+      }
+
       function resetForm() {
         $("#receiptForm").reset();
         $("#date").value = todayISO();
@@ -2245,6 +2311,7 @@
             r.date,
             r.donorName,
             r.donorEmail,
+            r.donorPhone,
             r.paymentMethod,
             r.category,
             r.reference
@@ -2261,13 +2328,14 @@
             "<tr>",
               "<td><strong>", escapeHtml(r.receiptNumber), "</strong></td>",
               "<td>", escapeHtml(formatDate(r.date)), "</td>",
-              "<td><strong>", escapeHtml(r.donorName), "</strong><br><span style='color:var(--muted);font-size:.88rem;'>", escapeHtml(r.donorEmail || "Sin correo"), "</span></td>",
+              "<td><strong>", escapeHtml(r.donorName), "</strong><br><span style='color:var(--muted);font-size:.88rem;'>", escapeHtml(r.donorEmail || r.donorPhone || "Sin contacto"), "</span></td>",
               "<td><strong>", escapeHtml(formatMoney(r.amount, r.currency)), "</strong></td>",
               "<td><span class='pill'>", escapeHtml(r.paymentMethod), "</span></td>",
               "<td>",
                 "<div class='toolbar'>",
                   "<button class='btn btn-small' type='button' data-action='load' data-id='", escapeHtml(r.id), "'>Ver</button>",
-                  "<button class='btn btn-small' type='button' data-action='email' data-id='", escapeHtml(r.id), "'>Enviar</button>",
+                  "<button class='btn btn-small' type='button' data-action='email' data-id='", escapeHtml(r.id), "'>Correo</button>",
+                  "<button class='btn btn-whatsapp btn-small' type='button' data-action='whatsapp' data-id='", escapeHtml(r.id), "'>WhatsApp</button>",
                   "<button class='btn btn-small' type='button' data-action='print' data-id='", escapeHtml(r.id), "'>PDF</button>",
                   "<button class='btn btn-danger btn-small' type='button' data-action='delete' data-id='", escapeHtml(r.id), "'>Borrar</button>",
                 "</div>",
@@ -2636,6 +2704,14 @@
           emailReceipt(null);
         });
 
+        $("#whatsappBtn").addEventListener("click", function () {
+          whatsappReceipt(null);
+        });
+
+        $("#heroWhatsappBtn").addEventListener("click", function () {
+          whatsappReceipt(null);
+        });
+
         $("#resetBtn").addEventListener("click", resetForm);
 
         $("#goFormBtn").addEventListener("click", function () {
@@ -2690,6 +2766,10 @@
             emailReceipt(receipt);
           }
 
+          if (action === "whatsapp") {
+            whatsappReceipt(receipt);
+          }
+
           if (action === "print") {
             activeReceipt = receipt;
             setPreview(receipt);
@@ -2742,7 +2822,7 @@
         renderReceipts();
         setPreview(getFormData());
 
-        showToast("Aplicación lista", "Ya puedes crear recibos profesionales con logo y PDF personalizado.");
+        showToast("Aplicación lista", "Ya puedes crear recibos profesionales y enviarlos por WhatsApp.");
       }
 
       document.addEventListener("DOMContentLoaded", init);
