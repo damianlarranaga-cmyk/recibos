@@ -1,5 +1,4 @@
-
-   <!doctype html>
+<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
@@ -22,7 +21,6 @@
       --danger: #a73535;
       --focus: #0b70ff;
       --shadow: 0 14px 38px rgba(25, 32, 27, .14);
-      --radius: 22px;
       --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       --serif: Georgia, "Times New Roman", serif;
     }
@@ -846,17 +844,6 @@
       }
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: .001ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
-        transition-duration: .001ms !important;
-      }
-    }
-
     @media print {
       @page {
         size: Letter;
@@ -906,7 +893,6 @@
       }
 
       #printArea.panel,
-      #printArea .panel,
       #printArea .panel-body {
         border: 0 !important;
         border-radius: 0 !important;
@@ -930,18 +916,6 @@
         break-inside: avoid !important;
       }
 
-      .receipt-card::before {
-        background:
-          radial-gradient(circle at top right, rgba(211, 155, 66, .16), transparent 2.4in),
-          linear-gradient(90deg, rgba(18, 55, 42, .05), transparent 55%) !important;
-      }
-
-      .receipt-top {
-        display: flex !important;
-        align-items: flex-start !important;
-        justify-content: space-between !important;
-      }
-
       .receipt-details.two {
         display: grid !important;
         grid-template-columns: 1fr 1fr !important;
@@ -961,22 +935,6 @@
 
       .receipt-title h2 {
         font-size: 25pt !important;
-      }
-
-      .seal {
-        width: .58in !important;
-        height: .58in !important;
-        border-radius: .14in !important;
-      }
-
-      .seal svg {
-        width: .36in !important;
-        height: .36in !important;
-      }
-
-      .thanks {
-        padding: .18in !important;
-        border-radius: .12in !important;
       }
 
       .no-print {
@@ -1015,8 +973,8 @@
         <span class="eyebrow">Aplicación local y privada</span>
         <h1 id="heroTitle">Recibos claros, listos para PDF.</h1>
         <p>
-          Crea recibos de contribuciones para donantes, registra pagos en efectivo u otros medios,
-          imprime o guarda como PDF y prepara un correo de agradecimiento de parte de la iglesia Jesús te ama.
+          Crea recibos de contribuciones, guarda los datos de cada contribuyente,
+          reutilízalos en recibos futuros y prepara un correo de agradecimiento cuando exista correo registrado.
         </p>
         <div class="toolbar">
           <button class="btn btn-primary" id="goFormBtn" type="button">Crear recibo</button>
@@ -1028,24 +986,42 @@
         <section class="panel no-print" aria-labelledby="formTitle">
           <div class="panel-header">
             <h2 id="formTitle">Nuevo recibo</h2>
-            <p>Completa los datos. La vista previa se actualiza automáticamente.</p>
+            <p>El correo es opcional. Los datos del contribuyente se guardan para próximos recibos.</p>
           </div>
 
           <div class="panel-body">
             <form id="receiptForm" novalidate>
               <fieldset>
-                <legend>Datos del donante</legend>
+                <legend>Datos del contribuyente</legend>
 
                 <div class="form-grid two">
+                  <div class="field" data-field="savedContributor">
+                    <label for="savedContributor">Usar contribuyente guardado</label>
+                    <select id="savedContributor" name="savedContributor">
+                      <option value="">Seleccionar contribuyente guardado...</option>
+                    </select>
+                    <span class="hint">Al seleccionar uno, se rellenan sus datos automáticamente.</span>
+                    <span class="error" id="savedContributorError"></span>
+                  </div>
+
+                  <div class="field">
+                    <label>&nbsp;</label>
+                    <button class="btn" id="clearContributorBtn" type="button">Nuevo contribuyente</button>
+                    <span class="hint">Limpia solo los datos personales para registrar otra persona.</span>
+                  </div>
+                </div>
+
+                <div class="form-grid two" style="margin-top:1rem;">
                   <div class="field" data-field="donorName">
-                    <label for="donorName">Nombre del donante *</label>
+                    <label for="donorName">Nombre del contribuyente *</label>
                     <input id="donorName" name="donorName" type="text" autocomplete="name" required placeholder="Ej. María González">
                     <span class="error" id="donorNameError"></span>
                   </div>
 
                   <div class="field" data-field="donorEmail">
-                    <label for="donorEmail">Correo del donante *</label>
-                    <input id="donorEmail" name="donorEmail" type="email" autocomplete="email" required placeholder="donante@correo.com">
+                    <label for="donorEmail">Correo del contribuyente</label>
+                    <input id="donorEmail" name="donorEmail" type="email" autocomplete="email" placeholder="Opcional">
+                    <span class="hint">Opcional. Solo se necesita para preparar el envío por correo.</span>
                     <span class="error" id="donorEmailError"></span>
                   </div>
                 </div>
@@ -1193,7 +1169,7 @@
               <div class="toolbar">
                 <button class="btn btn-primary" type="submit">Guardar recibo</button>
                 <button class="btn btn-accent" id="printBtn" type="button">Convertir a PDF</button>
-                <button class="btn" id="emailBtn" type="button">Enviar al donante</button>
+                <button class="btn" id="emailBtn" type="button">Enviar al contribuyente</button>
                 <button class="btn" id="resetBtn" type="button">Limpiar</button>
               </div>
             </form>
@@ -1231,7 +1207,7 @@
 
                 <section class="receipt-title">
                   <h2>Recibo de contribución</h2>
-                  <p>Documento de constancia para el donante.</p>
+                  <p>Documento de constancia para el contribuyente.</p>
                 </section>
 
                 <section class="amount-box">
@@ -1242,12 +1218,12 @@
                 <section class="receipt-details two">
                   <div>
                     <div class="detail">
-                      <span>Donante</span>
-                      <span id="rDonorName">Nombre del donante</span>
+                      <span>Contribuyente</span>
+                      <span id="rDonorName">Nombre del contribuyente</span>
                     </div>
                     <div class="detail">
                       <span>Correo</span>
-                      <span id="rDonorEmail">donante@correo.com</span>
+                      <span id="rDonorEmail">—</span>
                     </div>
                     <div class="detail">
                       <span>Fecha</span>
@@ -1307,6 +1283,48 @@
         </aside>
       </div>
 
+      <section class="panel no-print" style="margin-top:1rem;" aria-labelledby="contributorsTitle">
+        <div class="panel-header">
+          <h2 id="contributorsTitle">Contribuyentes guardados</h2>
+          <p>Estos datos se guardan localmente para reutilizarlos en próximos recibos.</p>
+        </div>
+
+        <div class="panel-body">
+          <div class="table-tools">
+            <div class="field">
+              <label for="contributorSearch">Buscar contribuyente</label>
+              <input id="contributorSearch" type="search" placeholder="Nombre, correo, teléfono o dirección">
+            </div>
+
+            <div class="toolbar">
+              <button class="btn btn-small" id="exportContributorsBtn" type="button">Exportar contribuyentes</button>
+              <button class="btn btn-danger btn-small" id="clearContributorsBtn" type="button">Borrar contribuyentes</button>
+            </div>
+          </div>
+
+          <div class="table-wrap" id="contributorsTableWrap" hidden>
+            <table>
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Correo</th>
+                  <th>Teléfono</th>
+                  <th>Dirección</th>
+                  <th>Recibos</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="contributorsBody"></tbody>
+            </table>
+          </div>
+
+          <div class="empty" id="contributorsEmptyState">
+            <h3>No hay contribuyentes guardados</h3>
+            <p>Se guardarán automáticamente cuando registres recibos.</p>
+          </div>
+        </div>
+      </section>
+
       <section class="panel no-print" style="margin-top:1rem;" aria-labelledby="savedTitle">
         <div class="panel-header">
           <h2 id="savedTitle">Recibos guardados</h2>
@@ -1336,12 +1354,12 @@
           <div class="table-tools">
             <div class="field">
               <label for="searchInput">Buscar recibos</label>
-              <input id="searchInput" type="search" placeholder="Nombre, correo, recibo, método o referencia">
+              <input id="searchInput" type="search" placeholder="Nombre, recibo, método o referencia">
             </div>
 
             <div class="toolbar">
               <button class="btn btn-small" id="exportBtn" type="button">Exportar CSV</button>
-              <button class="btn btn-danger btn-small" id="clearAllBtn" type="button">Borrar todo</button>
+              <button class="btn btn-danger btn-small" id="clearAllBtn" type="button">Borrar recibos</button>
             </div>
           </div>
 
@@ -1351,7 +1369,7 @@
                 <tr>
                   <th>Recibo</th>
                   <th>Fecha</th>
-                  <th>Donante</th>
+                  <th>Contribuyente</th>
                   <th>Importe</th>
                   <th>Método</th>
                   <th>Acciones</th>
@@ -1385,6 +1403,20 @@
       </header>
 
       <div class="modal-body">
+        <h3>Correo opcional</h3>
+        <p style="color:var(--muted); margin-top:.35rem;">
+          Puedes guardar recibos aunque el contribuyente no tenga correo. Para enviar por correo, sí debe existir un correo registrado.
+        </p>
+
+        <br>
+
+        <h3>Contribuyentes guardados</h3>
+        <p style="color:var(--muted); margin-top:.35rem;">
+          Cuando guardas un recibo, los datos personales del contribuyente se guardan automáticamente para reutilizarlos después.
+        </p>
+
+        <br>
+
         <h3>Convertir a PDF</h3>
         <p style="color:var(--muted); margin-top:.35rem;">
           Pulsa “Convertir a PDF”. En la ventana de impresión, elige “Guardar como PDF”.
@@ -1392,17 +1424,9 @@
 
         <br>
 
-        <h3>Enviar al donante</h3>
-        <p style="color:var(--muted); margin-top:.35rem;">
-          Pulsa “Enviar al donante”. Se abrirá tu aplicación de correo con un mensaje preparado.
-          Después de guardar el PDF, adjúntalo manualmente al correo.
-        </p>
-
-        <br>
-
         <h3>Privacidad</h3>
         <p style="color:var(--muted); margin-top:.35rem;">
-          Esta aplicación no usa servidores. Los recibos se guardan localmente en el navegador.
+          Esta aplicación no usa servidores. Los recibos y contribuyentes se guardan localmente en el navegador.
         </p>
       </div>
 
@@ -1418,11 +1442,13 @@
     (function () {
       "use strict";
 
-      var STORAGE_KEY = "recibos_jesus_te_ama_v3";
-      var NUMBER_KEY = "recibos_jesus_te_ama_next_number_v3";
-      var THEME_KEY = "recibos_jesus_te_ama_theme_v3";
+      var RECEIPTS_KEY = "recibos_jesus_te_ama_v4";
+      var CONTRIBUTORS_KEY = "contribuyentes_jesus_te_ama_v1";
+      var NUMBER_KEY = "recibos_jesus_te_ama_next_number_v4";
+      var THEME_KEY = "recibos_jesus_te_ama_theme_v4";
 
       var receipts = [];
+      var contributors = [];
       var activeReceipt = null;
       var lastFocusedElement = null;
 
@@ -1444,18 +1470,25 @@
         return local.toISOString().slice(0, 10);
       }
 
-      function nextReceiptNumber() {
-        var current = Number(localStorage.getItem(NUMBER_KEY) || "1");
-        localStorage.setItem(NUMBER_KEY, String(current + 1));
-        return "R-" + String(current).padStart(6, "0");
-      }
-
       function makeId() {
         if (window.crypto && typeof window.crypto.randomUUID === "function") {
           return window.crypto.randomUUID();
         }
 
         return String(Date.now()) + "-" + Math.random().toString(16).slice(2);
+      }
+
+      function nextReceiptNumber() {
+        var current = Number(localStorage.getItem(NUMBER_KEY) || "1");
+        localStorage.setItem(NUMBER_KEY, String(current + 1));
+        return "R-" + String(current).padStart(6, "0");
+      }
+
+      function normalize(text) {
+        return safeText(text)
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
       }
 
       function formatDate(iso) {
@@ -1485,13 +1518,6 @@
         }
       }
 
-      function normalize(text) {
-        return safeText(text)
-          .toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "");
-      }
-
       function escapeHtml(value) {
         return String(value == null ? "" : value)
           .replace(/&/g, "&amp;")
@@ -1505,6 +1531,7 @@
         var paymentInput = $("input[name='paymentMethod']:checked");
 
         return {
+          contributorId: $("#savedContributor").value || "",
           donorName: safeText($("#donorName").value),
           donorEmail: safeText($("#donorEmail").value),
           donorPhone: safeText($("#donorPhone").value),
@@ -1540,13 +1567,11 @@
         var errors = {};
 
         if (!data.donorName) {
-          errors.donorName = "Escribe el nombre del donante.";
+          errors.donorName = "Escribe el nombre del contribuyente.";
         }
 
-        if (!data.donorEmail) {
-          errors.donorEmail = "Escribe el correo del donante.";
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.donorEmail)) {
-          errors.donorEmail = "Escribe un correo válido.";
+        if (data.donorEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.donorEmail)) {
+          errors.donorEmail = "Escribe un correo válido o deja este campo vacío.";
         }
 
         if (!data.amount || data.amount <= 0) {
@@ -1562,6 +1587,7 @@
         }
 
         [
+          "savedContributor",
           "donorName",
           "donorEmail",
           "donorPhone",
@@ -1593,8 +1619,8 @@
         $("#rChurchName").textContent = r.churchName || "Iglesia Jesús te ama";
         $("#rNumber").textContent = number;
         $("#rAmount").textContent = formatMoney(r.amount, r.currency);
-        $("#rDonorName").textContent = r.donorName || "Nombre del donante";
-        $("#rDonorEmail").textContent = r.donorEmail || "donante@correo.com";
+        $("#rDonorName").textContent = r.donorName || "Nombre del contribuyente";
+        $("#rDonorEmail").textContent = r.donorEmail || "—";
         $("#rDate").textContent = formatDate(r.date);
         $("#rPayment").textContent = r.paymentMethod || "Efectivo";
         $("#rCategory").textContent = r.category || "Contribución general";
@@ -1608,20 +1634,133 @@
 
       function loadStorage() {
         try {
-          var raw = localStorage.getItem(STORAGE_KEY);
-          receipts = raw ? JSON.parse(raw) : [];
+          receipts = JSON.parse(localStorage.getItem(RECEIPTS_KEY) || "[]");
         } catch (error) {
           receipts = [];
-          showToast("Aviso", "No se pudieron leer los recibos guardados.");
+        }
+
+        try {
+          contributors = JSON.parse(localStorage.getItem(CONTRIBUTORS_KEY) || "[]");
+        } catch (error) {
+          contributors = [];
         }
       }
 
-      function saveStorage() {
+      function saveReceipts() {
         try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(receipts));
+          localStorage.setItem(RECEIPTS_KEY, JSON.stringify(receipts));
         } catch (error) {
-          showToast("Error", "No se pudo guardar. El almacenamiento local puede estar lleno.");
+          showToast("Error", "No se pudieron guardar los recibos.");
         }
+      }
+
+      function saveContributors() {
+        try {
+          localStorage.setItem(CONTRIBUTORS_KEY, JSON.stringify(contributors));
+        } catch (error) {
+          showToast("Error", "No se pudieron guardar los contribuyentes.");
+        }
+      }
+
+      function upsertContributor(data) {
+        var nameKey = normalize(data.donorName);
+        var emailKey = normalize(data.donorEmail);
+        var selectedId = data.contributorId;
+
+        var existing = null;
+
+        if (selectedId) {
+          existing = contributors.find(function (item) {
+            return item.id === selectedId;
+          });
+        }
+
+        if (!existing && emailKey) {
+          existing = contributors.find(function (item) {
+            return normalize(item.email) === emailKey;
+          });
+        }
+
+        if (!existing) {
+          existing = contributors.find(function (item) {
+            return normalize(item.name) === nameKey;
+          });
+        }
+
+        if (existing) {
+          existing.name = data.donorName;
+          existing.email = data.donorEmail;
+          existing.phone = data.donorPhone;
+          existing.address = data.donorAddress;
+          existing.updatedAt = new Date().toISOString();
+          existing.receiptCount = Number(existing.receiptCount || 0) + 1;
+          saveContributors();
+          return existing.id;
+        }
+
+        var contributor = {
+          id: makeId(),
+          name: data.donorName,
+          email: data.donorEmail,
+          phone: data.donorPhone,
+          address: data.donorAddress,
+          receiptCount: 1,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+
+        contributors.unshift(contributor);
+        saveContributors();
+        return contributor.id;
+      }
+
+      function renderContributorSelect() {
+        var select = $("#savedContributor");
+        var currentValue = select.value;
+
+        select.innerHTML = "<option value=''>Seleccionar contribuyente guardado...</option>" + contributors
+          .slice()
+          .sort(function (a, b) {
+            return a.name.localeCompare(b.name, "es");
+          })
+          .map(function (item) {
+            var label = item.name + (item.email ? " · " + item.email : "");
+            return "<option value='" + escapeHtml(item.id) + "'>" + escapeHtml(label) + "</option>";
+          })
+          .join("");
+
+        if (currentValue && contributors.some(function (item) { return item.id === currentValue; })) {
+          select.value = currentValue;
+        }
+      }
+
+      function fillContributor(contributor) {
+        if (!contributor) return;
+
+        $("#savedContributor").value = contributor.id;
+        $("#donorName").value = contributor.name || "";
+        $("#donorEmail").value = contributor.email || "";
+        $("#donorPhone").value = contributor.phone || "";
+        $("#donorAddress").value = contributor.address || "";
+
+        activeReceipt = null;
+        setPreview(getFormData());
+        validateForm();
+
+        showToast("Contribuyente cargado", "Los datos fueron colocados en el formulario.");
+      }
+
+      function clearContributorFields() {
+        $("#savedContributor").value = "";
+        $("#donorName").value = "";
+        $("#donorEmail").value = "";
+        $("#donorPhone").value = "";
+        $("#donorAddress").value = "";
+
+        activeReceipt = null;
+        setPreview(getFormData());
+        validateForm();
+        $("#donorName").focus();
       }
 
       function saveReceipt(event) {
@@ -1636,6 +1775,9 @@
           return;
         }
 
+        var contributorId = upsertContributor(result.data);
+        result.data.contributorId = contributorId;
+
         var receipt = Object.assign({}, result.data, {
           id: makeId(),
           receiptNumber: nextReceiptNumber(),
@@ -1645,18 +1787,22 @@
         receipts.unshift(receipt);
         activeReceipt = receipt;
 
-        saveStorage();
-        setPreview(receipt);
+        saveReceipts();
+        renderContributorSelect();
+        renderContributors();
         renderReceipts();
+        setPreview(receipt);
 
-        showToast("Recibo guardado", receipt.receiptNumber + " fue guardado correctamente.");
+        $("#savedContributor").value = contributorId;
+
+        showToast("Recibo guardado", receipt.receiptNumber + " fue guardado y el contribuyente quedó actualizado.");
       }
 
       function printReceipt() {
         var result = validateForm();
 
         if (!result.valid && !activeReceipt) {
-          showToast("Completa el recibo", "Necesitas nombre, correo, importe y fecha antes de imprimir.");
+          showToast("Completa el recibo", "Necesitas nombre, importe y fecha antes de imprimir.");
           return;
         }
 
@@ -1672,7 +1818,7 @@
         var number = r.receiptNumber || $("#rNumber").textContent;
 
         return [
-          "Estimado/a " + (r.donorName || "donante") + ",",
+          "Estimado/a " + (r.donorName || "contribuyente") + ",",
           "",
           "Dios le bendiga. Gracias de parte de la iglesia " + (r.churchName || "Jesús te ama") + " por su contribución.",
           "",
@@ -1698,14 +1844,20 @@
           var result = validateForm();
 
           if (!result.valid) {
-            showToast("Faltan datos", "Completa nombre, correo, importe y fecha antes de enviar.");
+            showToast("Faltan datos", "Completa nombre, importe y fecha antes de enviar.");
             return;
           }
 
           r = result.data;
         }
 
-        var to = encodeURIComponent(r.donorEmail || "");
+        if (!safeText(r.donorEmail)) {
+          showToast("Correo no registrado", "Este contribuyente no tiene correo. Agrega un correo para poder preparar el envío.");
+          $("#donorEmail").focus();
+          return;
+        }
+
+        var to = encodeURIComponent(r.donorEmail);
         var subject = encodeURIComponent("Recibo de contribución " + (r.receiptNumber || $("#rNumber").textContent));
         var body = encodeURIComponent(makeEmailBody(r));
 
@@ -1729,11 +1881,13 @@
         });
 
         setPreview(getFormData());
+        renderContributorSelect();
         showToast("Formulario limpio", "Puedes crear un nuevo recibo.");
         $("#donorName").focus();
       }
 
       function loadReceiptToForm(receipt) {
+        $("#savedContributor").value = receipt.contributorId || "";
         $("#donorName").value = receipt.donorName || "";
         $("#donorEmail").value = receipt.donorEmail || "";
         $("#donorPhone").value = receipt.donorPhone || "";
@@ -1779,9 +1933,44 @@
           activeReceipt = null;
         }
 
-        saveStorage();
+        saveReceipts();
         renderReceipts();
         showToast("Recibo borrado", receipt.receiptNumber + " fue eliminado.");
+      }
+
+      function deleteContributor(id) {
+        var contributor = contributors.find(function (item) {
+          return item.id === id;
+        });
+
+        if (!contributor) return;
+
+        if (!confirm("¿Borrar el contribuyente " + contributor.name + "? Los recibos existentes no se borrarán.")) {
+          return;
+        }
+
+        contributors = contributors.filter(function (item) {
+          return item.id !== id;
+        });
+
+        receipts.forEach(function (receipt) {
+          if (receipt.contributorId === id) {
+            receipt.contributorId = "";
+          }
+        });
+
+        saveContributors();
+        saveReceipts();
+
+        if ($("#savedContributor").value === id) {
+          $("#savedContributor").value = "";
+        }
+
+        renderContributorSelect();
+        renderContributors();
+        renderReceipts();
+
+        showToast("Contribuyente borrado", "Los recibos anteriores se conservaron.");
       }
 
       function renderReceipts() {
@@ -1809,7 +1998,7 @@
             "<tr>",
               "<td><strong>", escapeHtml(r.receiptNumber), "</strong></td>",
               "<td>", escapeHtml(formatDate(r.date)), "</td>",
-              "<td><strong>", escapeHtml(r.donorName), "</strong><br><span style='color:var(--muted);font-size:.88rem;'>", escapeHtml(r.donorEmail), "</span></td>",
+              "<td><strong>", escapeHtml(r.donorName), "</strong><br><span style='color:var(--muted);font-size:.88rem;'>", escapeHtml(r.donorEmail || "Sin correo"), "</span></td>",
               "<td><strong>", escapeHtml(formatMoney(r.amount, r.currency)), "</strong></td>",
               "<td><span class='pill'>", escapeHtml(r.paymentMethod), "</span></td>",
               "<td>",
@@ -1825,6 +2014,47 @@
         }).join("");
 
         renderStats();
+      }
+
+      function renderContributors() {
+        var query = normalize($("#contributorSearch").value);
+
+        var filtered = contributors
+          .slice()
+          .sort(function (a, b) {
+            return a.name.localeCompare(b.name, "es");
+          })
+          .filter(function (c) {
+            var haystack = [
+              c.name,
+              c.email,
+              c.phone,
+              c.address
+            ].join(" ");
+
+            return normalize(haystack).indexOf(query) !== -1;
+          });
+
+        $("#contributorsTableWrap").hidden = filtered.length === 0;
+        $("#contributorsEmptyState").hidden = filtered.length !== 0;
+
+        $("#contributorsBody").innerHTML = filtered.map(function (c) {
+          return [
+            "<tr>",
+              "<td><strong>", escapeHtml(c.name), "</strong></td>",
+              "<td>", escapeHtml(c.email || "—"), "</td>",
+              "<td>", escapeHtml(c.phone || "—"), "</td>",
+              "<td>", escapeHtml(c.address || "—"), "</td>",
+              "<td><span class='pill'>", escapeHtml(c.receiptCount || 0), "</span></td>",
+              "<td>",
+                "<div class='toolbar'>",
+                  "<button class='btn btn-small' type='button' data-contributor-action='use' data-id='", escapeHtml(c.id), "'>Usar</button>",
+                  "<button class='btn btn-danger btn-small' type='button' data-contributor-action='delete' data-id='", escapeHtml(c.id), "'>Borrar</button>",
+                "</div>",
+              "</td>",
+            "</tr>"
+          ].join("");
+        }).join("");
       }
 
       function renderStats() {
@@ -1856,9 +2086,10 @@
         var headers = [
           "Recibo",
           "Fecha",
-          "Donante",
+          "Contribuyente",
           "Correo",
           "Telefono",
+          "Direccion",
           "Importe",
           "Moneda",
           "Metodo",
@@ -1877,6 +2108,7 @@
             r.donorName,
             r.donorEmail,
             r.donorPhone,
+            r.donorAddress,
             r.amount,
             r.currency,
             r.paymentMethod,
@@ -1889,19 +2121,54 @@
           ].map(csvCell).join(",");
         });
 
+        downloadCSV("recibos-iglesia-jesus-te-ama-" + todayISO() + ".csv", headers, rows);
+        showToast("CSV exportado", "Se descargó el archivo de recibos.");
+      }
+
+      function exportContributorsCSV() {
+        if (!contributors.length) {
+          showToast("Sin datos", "No hay contribuyentes para exportar.");
+          return;
+        }
+
+        var headers = [
+          "Nombre",
+          "Correo",
+          "Telefono",
+          "Direccion",
+          "Cantidad de recibos",
+          "Creado",
+          "Actualizado"
+        ];
+
+        var rows = contributors.map(function (c) {
+          return [
+            c.name,
+            c.email,
+            c.phone,
+            c.address,
+            c.receiptCount || 0,
+            c.createdAt,
+            c.updatedAt
+          ].map(csvCell).join(",");
+        });
+
+        downloadCSV("contribuyentes-iglesia-jesus-te-ama-" + todayISO() + ".csv", headers, rows);
+        showToast("CSV exportado", "Se descargó el archivo de contribuyentes.");
+      }
+
+      function downloadCSV(filename, headers, rows) {
         var csv = "\uFEFF" + headers.join(",") + "\n" + rows.join("\n");
         var blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
         var url = URL.createObjectURL(blob);
         var link = document.createElement("a");
 
         link.href = url;
-        link.download = "recibos-iglesia-jesus-te-ama-" + todayISO() + ".csv";
+        link.download = filename;
         document.body.appendChild(link);
         link.click();
         link.remove();
         URL.revokeObjectURL(url);
-
-        showToast("CSV exportado", "Se descargó el archivo de recibos.");
       }
 
       function csvCell(value) {
@@ -1915,15 +2182,40 @@
           return;
         }
 
-        if (!confirm("¿Borrar todos los recibos guardados en este navegador?")) {
+        if (!confirm("¿Borrar todos los recibos guardados en este navegador? Los contribuyentes se conservarán.")) {
           return;
         }
 
         receipts = [];
         activeReceipt = null;
-        saveStorage();
+        saveReceipts();
         renderReceipts();
-        showToast("Recibos borrados", "La biblioteca quedó vacía.");
+        showToast("Recibos borrados", "La biblioteca de recibos quedó vacía.");
+      }
+
+      function clearAllContributors() {
+        if (!contributors.length) {
+          showToast("Sin contribuyentes", "No hay contribuyentes para borrar.");
+          return;
+        }
+
+        if (!confirm("¿Borrar todos los contribuyentes guardados? Los recibos existentes no se borrarán.")) {
+          return;
+        }
+
+        contributors = [];
+
+        receipts.forEach(function (receipt) {
+          receipt.contributorId = "";
+        });
+
+        saveContributors();
+        saveReceipts();
+        renderContributorSelect();
+        renderContributors();
+        renderReceipts();
+
+        showToast("Contribuyentes borrados", "La agenda de contribuyentes quedó vacía.");
       }
 
       function showToast(title, message) {
@@ -1988,12 +2280,27 @@
         $("#receiptForm").addEventListener("submit", saveReceipt);
 
         $("#receiptForm").addEventListener("input", function () {
+          activeReceipt = null;
           setPreview(getFormData());
         });
 
         $("#receiptForm").addEventListener("change", function () {
+          activeReceipt = null;
           setPreview(getFormData());
         });
+
+        $("#savedContributor").addEventListener("change", function () {
+          var id = $("#savedContributor").value;
+          var contributor = contributors.find(function (item) {
+            return item.id === id;
+          });
+
+          if (contributor) {
+            fillContributor(contributor);
+          }
+        });
+
+        $("#clearContributorBtn").addEventListener("click", clearContributorFields);
 
         $("#printBtn").addEventListener("click", printReceipt);
         $("#heroPrintBtn").addEventListener("click", printReceipt);
@@ -2027,8 +2334,13 @@
         });
 
         $("#searchInput").addEventListener("input", renderReceipts);
+        $("#contributorSearch").addEventListener("input", renderContributors);
+
         $("#exportBtn").addEventListener("click", exportCSV);
         $("#clearAllBtn").addEventListener("click", clearAllReceipts);
+
+        $("#exportContributorsBtn").addEventListener("click", exportContributorsCSV);
+        $("#clearContributorsBtn").addEventListener("click", clearAllContributors);
 
         $("#receiptsBody").addEventListener("click", function (event) {
           var button = event.target.closest("button[data-action]");
@@ -2063,6 +2375,29 @@
             deleteReceipt(id);
           }
         });
+
+        $("#contributorsBody").addEventListener("click", function (event) {
+          var button = event.target.closest("button[data-contributor-action]");
+          if (!button) return;
+
+          var id = button.getAttribute("data-id");
+          var action = button.getAttribute("data-contributor-action");
+
+          var contributor = contributors.find(function (item) {
+            return item.id === id;
+          });
+
+          if (!contributor) return;
+
+          if (action === "use") {
+            fillContributor(contributor);
+            $("#donorName").scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+
+          if (action === "delete") {
+            deleteContributor(id);
+          }
+        });
       }
 
       function init() {
@@ -2073,10 +2408,12 @@
         $("#date").value = todayISO();
         $("#churchName").value = "Iglesia Jesús te ama";
 
-        setPreview(getFormData());
+        renderContributorSelect();
+        renderContributors();
         renderReceipts();
+        setPreview(getFormData());
 
-        showToast("Aplicación lista", "Ya puedes crear recibos de contribuciones.");
+        showToast("Aplicación lista", "Ya puedes crear recibos y reutilizar contribuyentes.");
       }
 
       document.addEventListener("DOMContentLoaded", init);
